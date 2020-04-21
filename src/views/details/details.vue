@@ -9,82 +9,85 @@
             </el-col>
             <!-- <div class="select"> -->
             <el-col :span="4" class="hidden-md-and-down">
-              <el-select v-model="value" placeholder="请选择">
+              <el-select v-model="valueAuthor" placeholder="请选择作者">
                   <el-option key="1" label="1" value="1">
                   <div @click="dialogTableVisible = true">View all...</div>
                   </el-option>
                   <el-option
-                  v-for="item in cities"
-                  :key="item.value"
+                  v-for="item in topAuthor"
+                  :key="item.label"
                   :label="item.label"
                   :value="item.value">
                   <span style="float: left">{{ item.label }}</span>
-                  <span style="float: right; color: #8492a6; font-size: 13px">{{ item.value }}</span>
+                  <!-- <span style="float: right; color: #8492a6; font-size: 13px">{{ item.value }}</span> -->
                   </el-option>
               </el-select>
             </el-col>
             <el-col :span="4" class="hidden-md-and-down">
-              <el-select v-model="value" placeholder="请选择">
+              <el-select v-model="valueTime" placeholder="请选择时间">
                   <el-option key="1" label="1" value="1">
                   <div @click="dialogTableVisible = true">View all...</div>
                   </el-option>
                   <el-option
-                  v-for="item in cities"
-                  :key="item.value"
+                  v-for="item in topTime"
+                  :key="item.key"
                   :label="item.label"
                   :value="item.value">
-                  <span style="float: left">{{ item.label }}</span>
-                  <span style="float: right; color: #8492a6; font-size: 13px">{{ item.value }}</span>
+                  <span style="float: left">{{ item.value }}</span>
+                  <!-- <span style="float: right; color: #8492a6; font-size: 13px">{{ item.value }}</span> -->
                   </el-option>
               </el-select>
             </el-col>
             <el-col :span="4" class="hidden-md-and-down">
-              <el-select v-model="value" placeholder="请选择">
+              <el-select v-model="valueCollect" placeholder="请选择收藏数">
                   <el-option key="1" label="1" value="1">
                   <div @click="dialogTableVisible = true">View all...</div>
                   </el-option>
                   <el-option
-                  v-for="item in cities"
-                  :key="item.value"
+                  v-for="item in topCollect"
+                  :key="item.key"
                   :label="item.label"
                   :value="item.value">
-                  <span style="float: left">{{ item.label }}</span>
-                  <span style="float: right; color: #8492a6; font-size: 13px">{{ item.value }}</span>
+                  <span style="float: left">{{ item.value }}</span>
+                  <!-- <span style="float: right; color: #8492a6; font-size: 13px">{{ item.value }}</span> -->
                   </el-option>
               </el-select>
             </el-col>
             <el-col :span="4" class="hidden-md-and-down">
-              <el-select v-model="value" placeholder="请选择">
+              <el-select v-model="valueTitle" placeholder="请选择标题">
                 <el-option key="1" label="1" value="1">
                   <div @click="dialogTableVisible = true">View all...</div>
                   </el-option>
                   <el-option
-                  v-for="item in cities"
-                  :key="item.value"
+                  v-for="item in topTitle"
+                  :key="item.label"
                   :label="item.label"
                   :value="item.value">
                   <span style="float: left">{{ item.label }}</span>
-                  <span style="float: right; color: #8492a6; font-size: 13px">{{ item.value }}</span>
+                  <!-- <span style="float: right; color: #8492a6; font-size: 13px">{{ item.value }}</span> -->
                   </el-option>
               </el-select>
             </el-col>
             <!-- <el-col :span="4">
               <div style="height:100px"></div>
             </el-col> -->
-            <el-col :span="8" class="hidden-md-and-down">
-              <el-select v-model="value" placeholder="请选择" style="float:right">
+            <el-col :span="4" class="hidden-md-and-down">
+              <el-select v-model="valueReferid" placeholder="请选择文章编号">
                   <el-option key="1" label="1" value="1">
                   <div @click="dialogTableVisible = true">View all...</div>
                   </el-option>
                   <el-option
-                  v-for="item in cities"
-                  :key="item.value"
+                  v-for="item in topReferid"
+                  :key="item.label"
                   :label="item.label"
                   :value="item.value">
                   <span style="float: left">{{ item.label }}</span>
-                  <span style="float: right; color: #8492a6; font-size: 13px">{{ item.value }}</span>
+                  <!-- <span style="float: right; color: #8492a6; font-size: 13px">{{ item.value }}</span> -->
                   </el-option>
               </el-select>
+              </el-col>
+              <el-col :span="4">
+                <el-button type="primary" @click="exactValue">查找</el-button>
               </el-col>
               <el-col :span="24">
                 <div class="subtitle">meiyi knowledge</div>
@@ -115,59 +118,143 @@
         <el-row style="padding:20px">
          <!-- <div class="content"> -->
               <el-col :span="20">
-                <div>一共{{showdata.length}}条数据</div>
+                <div v-if="isExactterm">一共{{showdata.length}}条数据</div>
+                <div v-else>一共{{exactTerm.length}}条数据</div>
               </el-col>
              <!-- <div> -->
               <el-col :span="24" class="hidden-sm-and-down">
-                 <el-card class="box-card" v-loading="loading" v-for="(item,i) of showdata" :key="i">
-                    <div>
-                        <div>
-                           <el-link type="primary" @click="skip">Related Tasks can Share! A Multi-task Framework for Affective language</el-link>
+                 <div v-if="isExactterm">
+                  <el-card  class="box-card" v-loading="loading" v-for="(item,i) of showdata" :key="i">
+                      <div>
+                          <div>
+                            <el-link type="primary" :data="showdata[i].referId" @click="skip($event)">展示更多关于本篇文章的详细情况 <i class="el-icon-right"></i> </el-link>
+                            
                           </div>
-                        <div class="pdf">
-                          <span @click="pdf">pdf</span>
-                          <i class="el-icon-share" ></i>  
-                          <i class="el-icon-s-flag" @click="newdialogTableVisible = true"></i>  
-                        </div>
-                        <div class="details">
-                            <ul class="clu" @click="contentJudge($event,i)">
-                                <li><el-link type="info">介绍</el-link></li>
-                                <li><el-link type="info">内容</el-link></li>
-                                <li><el-link type="info">结论</el-link></li>
-                                <li><el-link type="info">展示</el-link></li>
-                            </ul>
-                            <el-card class="newbox-card" :class="cardbg">
-                              <div class="enlargement">
-                                  <!-- <div v-if="initialize">{{classifiedDisplay[i]}}</div> -->
-                                  <div>{{newclassifiedDisplay[i]}}</div>
-                                  <!-- 图片 -->
-                                  <div>
-                                      <div class="block block1" @click="dialogVisible = true">
-                                        <el-image :src="url"></el-image>
-                                      </div>
-                                  </div>
-                                    <!-- <div class="demo-image__preview">
-                                    <el-image 
-                                      style="width: 100px; height: 100px"
-                                      :src="url" 
-                                      :preview-src-list="srcList">
-                                    </el-image>
-                                  </div> -->
-                              </div>
-                            </el-card>
-                            <el-dialog 
-                              :visible.sync="dialogVisible"
-                              width="70%"
-                              >
-                              <div class="dia">
-                                <div  style="margin:auto;">
-                                    <el-image :src="url"></el-image>
+                          <div class="pdf">
+                            <span @click="pdf">pdf</span>
+                            <i class="el-icon-share" ></i>  
+                            <i class="el-icon-s-flag" @click="newdialogTableVisible = true"></i>  
+                          </div>
+                          <div class="details">
+                              <ul class="clu" @click="contentJudge($event,i)">
+                                  <li><el-link type="info">文章标题</el-link></li>
+                                  <li><el-link type="info">文章概要</el-link></li>
+                                  <li><el-link type="info">文章来源</el-link></li>
+                                  <li><el-link type="info">文章科研成果</el-link></li>
+                                  <li>
+                                    <span class="collect" @click="comment">
+                                            评论
+                                            <el-badge class="mark" :value="12" />
+                                    </span>
+                                    <span class="collect" @click="collectWay(i)">
+                                            {{isCollect[i]}}
+                                            <el-badge class="mark" :value="collect[i]" />
+                                    </span>
+                                  </li>
+                                  
+                                  <!-- 评论抽屉 -->
+                                  <el-drawer
+                                    title="我是标题"
+                                    :visible.sync="drawer"
+                                    :with-header="false">
+                                    <span>我来啦!</span>
+                                  </el-drawer>
+                              </ul>
+                              <el-card class="newbox-card" :class="cardbg">
+                                <div class="enlargement">
+                                    <!-- <div v-if="initialize">{{classifiedDisplay[i]}}</div> -->
+                                    <div>{{newclassifiedDisplay[i]}}</div>
+                                    <!-- 图片 -->
+                                    <div>
+                                        <div class="block block1" @click="dialogVisible = true">
+                                          <el-image :src="url"></el-image>
+                                        </div>
+                                    </div>
+                                      <!-- <div class="demo-image__preview">
+                                      <el-image 
+                                        style="width: 100px; height: 100px"
+                                        :src="url" 
+                                        :preview-src-list="srcList">
+                                      </el-image>
+                                    </div> -->
                                 </div>
-                              </div>
-                            </el-dialog>
-                        </div>
-                    </div>
-                </el-card>
+                              </el-card>
+                              <el-dialog 
+                                :visible.sync="dialogVisible"
+                                width="70%"
+                                >
+                                <div class="dia">
+                                  <div  style="margin:auto;">
+                                      <el-image :src="url"></el-image>
+                                  </div>
+                                </div>
+                              </el-dialog>
+                          </div>
+                      </div>
+                  </el-card>
+                 </div>
+                 <div  v-else >
+                  <el-card class="box-card" v-loading="loading" v-for="(item,i) of exactTerm" :key="i">
+                      <div>
+                          <div>
+                            <el-link type="primary" @click="skip">展示更多关于本篇文章的详细情况 <i class="el-icon-right"></i> </el-link>
+                            
+                          </div>
+                          <div class="pdf">
+                            <span @click="pdf">pdf</span>
+                            <i class="el-icon-share" ></i>  
+                            <i class="el-icon-s-flag" @click="newdialogTableVisible = true"></i>  
+                          </div>
+                          <div class="details">
+                              <ul class="clu" @click="contentJudgeExactTerm($event,i)">
+                                  <li><el-link type="info">文章标题</el-link></li>
+                                  <li><el-link type="info">文章概要</el-link></li>
+                                  <li><el-link type="info">文章来源</el-link></li>
+                                  <li><el-link type="info">文章科研成果</el-link></li>
+                                  <li>
+                                    <span class="collect" @click="comment">
+                                            评论
+                                            <el-badge class="mark" :value="12" />
+                                    </span>
+                                    <span class="collect" @click="collectWay(i)">
+                                            {{isCollect[i]}}
+                                            <el-badge class="mark" :value="collect[i]" />
+                                    </span>
+                                  </li>
+                                  
+                                  <!-- 评论抽屉 -->
+                                  <el-drawer
+                                    title="我是标题"
+                                    :visible.sync="drawer"
+                                    :with-header="false">
+                                    <span>我来啦!</span>
+                                  </el-drawer>
+                              </ul>
+                              <el-card class="newbox-card" :class="cardbg">
+                                <div class="enlargement">
+                                    <div>{{newexactTerm[i]}}</div>
+                                    <!-- 图片 -->
+                                    <div>
+                                        <div class="block block1" @click="dialogVisible = true">
+                                          <el-image :src="url"></el-image>
+                                        </div>
+                                    </div>
+                                </div>
+                              </el-card>
+                              <el-dialog 
+                                :visible.sync="dialogVisible"
+                                width="70%"
+                                >
+                                <div class="dia">
+                                  <div  style="margin:auto;">
+                                      <el-image :src="url"></el-image>
+                                  </div>
+                                </div>
+                              </el-dialog>
+                          </div>
+                      </div>
+                  </el-card>
+                 </div>
               </el-col>
               <el-col :span="24" class="hidden-md-and-up">
                 <!-- <template> -->
@@ -244,6 +331,7 @@
 </template>
 <script>
 import {mapState,mapActions} from "vuex"
+import {collect,disexactValue} from "../../assets/js/apis/scientific"
 export default {
  data() {
       const item = {
@@ -252,13 +340,21 @@ export default {
         address: 'international'
       };
       return {
+        //精确查找的数据
+        exactTerm:[],
+        isExactterm:true,
+        valueCollect:"",
+        valueAuthor:"",
+        valueTime:"",
+        valueTitle:"",
+        valueReferid:"",
+        drawer: false,
         // initialize:true,
         choose:["介绍","keyan","mm","jk"],
         dialogVisible: false,
         //card的背景颜色
         cardbg:"cardbg",
         classifiedDisplay:"",
-        // newclassifiedDisplay:"",
         newdialogTableVisible: false,
         //图片
         url: '/img/recommend_details/recommend_details3.jpg',
@@ -275,37 +371,53 @@ export default {
         newdialogTableVisible: false,
         input:"",
         tableData: Array(20).fill(item),
-        cities: [{
-          value: 'Beijing',
-          label: '北京'
-          }, {
-            value: 'Shanghai',
-            label: '上海'
-          }, {
-            value: 'Nanjing',
-            label: '南京'
-          }, {
-            value: 'Chengdu',
-            label: '成都'
-          }, {
-            value: 'Shenzhen',
-            label: '深圳'
-          }, {
-            value: 'Guangzhou',
-            label: '广州'
-          }],
           value: ''
         }
     },
     methods:{
       ...mapActions("scientific",[
-          "disGetDataList"
+          "disGetDataList",
       ]),
+      //精确查找
+      exactValue(){
+         let param={
+           author:this.valueAuthor,
+           time:this.valueTime,
+           title:this.valueTitle,
+           referId:this.valueReferid,
+           collect:this.valueCollect,
+         }
+        disexactValue(param).then(res=>{
+          if(res.code===1){
+            this.exactTerm=res.result
+            this.isExactterm=false
+          }
+          
+        }).catch(e=>{console.log(e)})
+      },
+      //评论的点击事件
+      comment(command){
+          this.drawer = true;
+      },
+      collectWay(i){
+        if(this.isCollect[i]==="收藏"){
+          this.isCollect[i] = "取消收藏"
+          this.$forceUpdate()
+          this.$set(this.collect,i,this.collect[i]+1)
+        }else{
+          this.isCollect[i] = "收藏"
+          this.$forceUpdate()
+          this.$set(this.collect,i,this.collect[i]-1)
+        }
+        let param={referId : this.referid[i],collect:this.collect[i]} 
+        // param = JSON.stringify(param)
+        collect(param).then((res)=>{
+          console.log(res)
+        }).catch(e=>{console.log(e)})
+      },
       //判断下拉框
        handleCommand(command) {
         // this.$message('click on item ' + command);
-        // console.log(this.showdata,"jjjj")
-        // console.log(command,"dajiba")
         let i = command.i
         if(command.skip==="a"){
           // i = 0
@@ -343,95 +455,199 @@ export default {
       },
       //判断内容框需要显示的数据
       contentJudge(e,i){
-        console.log(e.target.innerHTML);
         let value = e.target.innerHTML;
-        console.log(this.showdata,"hh")
-        if(value==="介绍"){
-          this.newclassifiedDisplay[i] = this.showdata.map((elem)=>{
-            return elem.author
-          })[i]
-          this.cardbg="cardbg1"
-        }else if(value==="内容"){
+        if(value==="文章标题"){
           let data = this.showdata.map((elem)=>{
             return elem.title
           })[i]
-          this.newclassifiedDisplay[i] = data
-          this.cardbg="cardbg4"
-        }else if(value==="结论"){
-          this.newclassifiedDisplay[i] = this.showdata.map((elem)=>{
+          this.$forceUpdate();
+          this.$set(this.newclassifiedDisplay,i,data)
+        }else if(value==="文章概要"){
+          let data = this.showdata.map((elem)=>{
+            return elem.abstract
+          })[i]
+          this.$forceUpdate();
+          this.$set(this.newclassifiedDisplay,i,data)
+        }else if(value==="文章来源"){
+          let data = this.showdata.map((elem)=>{
             return elem.source
           })[i]
-          this.cardbg="cardbg3"
-        }else if(value==="展示"){
-          this.newclassifiedDisplay[i] = this.showdata.map((elem)=>{
+          let data1= this.showdata.map((elem)=>{
+            return elem.author
+          })[i]
+          let data2= this.showdata.map((elem)=>{
             return elem.time
           })[i]
-          this.cardbg="cardbg2"
+          this.$forceUpdate();
+          this.$set(this.newclassifiedDisplay,i,"来源："+data+"作者："+data1+"时间："+data2)
+        }else if(value==="文章科研成果"){
+          let data = this.showdata.map((elem)=>{
+            return elem.introduce
+          })[i]
+          this.$forceUpdate();
+          this.$set(this.newclassifiedDisplay,i,data)
         }
-        console.log(this.newclassifiedDisplay,"0987654321")
       },
-      skip(){
-         this.$router.push({path: '/detailsOne'});
+      //精确查询过后的点击函数
+      contentJudgeExactTerm(e,i){
+        let value = e.target.innerHTML;
+        if(value==="文章标题"){
+          let data = this.showdata.map((elem)=>{
+            return elem.title
+          })[i]
+          this.$forceUpdate();
+          this.$set(this.newexactTerm,i,data)
+        }else if(value==="文章概要"){
+          let data = this.showdata.map((elem)=>{
+            return elem.abstract
+          })[i]
+          this.$forceUpdate();
+          this.$set(this.newexactTerm,i,data)
+        }else if(value==="文章来源"){
+          let data = this.showdata.map((elem)=>{
+            return elem.source
+          })[i]
+          let data1= this.showdata.map((elem)=>{
+            return elem.author
+          })[i]
+          let data2= this.showdata.map((elem)=>{
+            return elem.time
+          })[i]
+          this.$forceUpdate();
+          this.$set(this.newexactTerm,i,"来源："+data+"作者："+data1+"时间："+data2)
+        }else if(value==="文章科研成果"){
+          let data = this.showdata.map((elem)=>{
+            return elem.introduce
+          })[i]
+          this.$forceUpdate();
+          this.$set(this.newexactTerm,i,data)
+        }
+      },
+      skip(e){
+        let font=e.currentTarget.getAttribute("data")
+        //  console.log(font,"font")
+         this.$router.push({
+           path:'/detailsOne',
+           query:{referId:font}
+           })
+        //  this.$router.push({path: '/detailsOne'});
       },  
       pdf(){
         const {href} = this.$router.resolve({path:"https://arxiv.org/pdf/2002.05909.pdf"});
         window.open(href, '_blank');
-      } ,
+      },
     },
     computed:{
           ...mapState('scientific',[
           "allData",
           "dataList",
+          // "collect",
           // "showdata"
         ]),
+        isCollect(){
+          let collect = []
+          for(var i=0;i<this.showdata.length;i++){
+            collect.push("收藏")
+          }
+          
+          return collect
+        },
+        // isBottom:{
+        //     get (){
+        //         return this.$store.state.scientific.isBottom
+        //     },
+        //     set(val){
+        //         this.$store.state.scientific.isBottom=val
+        //     }
+        // },
         showdata(){
           let data=this.allData.filter((elem,i,arr)=>{
              return elem.source === this.$route.query.source
           })
           return data
         },
+        newexactTerm(){
+          return this.exactTerm.map((elem)=>{
+            return elem.title
+          })
+        },
         newclassifiedDisplay(){
          return  this.showdata.map((elem)=>{
-            return elem.author
+            return elem.title
+          })
+        },
+        //文章收藏
+        collect(){
+          return this.showdata.map((elem)=>{
+            return elem.collect
+          })
+        },
+        //文章编号
+        referid(){
+          return this.showdata.map((elem)=>{
+            return elem.referId
+          })
+        },
+        topReferid(){
+          return this.showdata.map((elem)=>{
+            return {
+              value:elem.referId,
+              label:elem.referId,
+            }
+          })
+        },
+        topAuthor(){
+          return this.showdata.map((elem)=>{
+            return {
+              value:elem.author,
+              label:elem.author,
+            }
+          })
+        },
+        topTime(){
+          return this.showdata.map((elem)=>{
+            return {
+              value:elem.time,
+              label:elem.time,
+              key:elem.author
+            }
+          })
+        },
+        topCollect(){
+          return this.showdata.map((elem)=>{
+            return {
+              value:elem.collect,
+              label:elem.collect,
+              key:elem.author
+            }
+          })
+        },
+        topTitle(){
+          return this.showdata.map((elem)=>{
+            return {
+              value:elem.title,
+              label:elem.title,
+            }
           })
         }
-
-        // showdata:{
-        //     get (){
-        //         return this.$store.state.scientific.showdata
-        //     },
-        //     set(val){
-        //         this.$store.state.scientific.showdata=val
-        //     }
-        // }
       },
       updated(){
-        // console.log(this.classifiedDisplay,"098767890")
-        //   console.log(this.show)
-          // console.log(this.showdata,"999")
-          // console.log(this.newclassifiedDisplay,">>>>>>>>")
+        // console.log(this.collect,"collect")
       },
       mounted(){
         this.disGetDataList()
         
         setTimeout(()=>{
-              // console.log(this.showdata,"yy")
               this.classifiedDisplay = this.showdata.map((elem)=>{
                 return elem.source
               })
-              // console.log(this.classifiedDisplay,"opop")
           },1000)
-        
-          // console.log(this.classifiedDisplay,"pp09p")
       },
       created(){
           
           setTimeout(()=>{
               this.loading=false
           },1000)
-          // console.log(this.showdata,"ppp")
-          
-          
       }
       
 }
@@ -444,7 +660,10 @@ export default {
     background: #000;
     z-index: 999;
   }
-  .el-header{position: fixed;width: 100%}
+  .el-header{
+    position: fixed;
+    width: 100%
+    }
   .el-main {
     background-color: rgb(48, 47, 47);
     color: #fff;
@@ -466,18 +685,53 @@ export default {
   .el-container:nth-child(7) .el-aside {
     line-height: 320px;
   }
-  .contactdetails{width: 300px;margin-left: 300px}
-  .contactreact{margin-left: 260px;margin-top: 20px;color:rgb(61, 155, 243)}
-  .footmeiyi{font-size: 50px;line-height: 120px;margin-left: 30px}
-  .alllink{margin-left: 40px}
-  .row{margin-left: 10px}
-  .el-link.el-link--default{color: #fff;margin-left: 20px}
-  .thanks{margin-top:20px;margin-bottom: 20px}
-  .gif{display: flex;justify-content: flex-start;height: 325px;margin-left: 300px;margin-top: -80px}
-  .gif img{margin-left: -40px;width: 400px}
-  .meitou{margin-top: 65px;margin-bottom: 20px;}
+  .contactdetails{
+    width: 300px;
+    margin-left: 300px
+    }
+  .contactreact{
+    margin-left: 260px;
+    margin-top: 20px;
+    color:rgb(61, 155, 243)
+    }
+  .footmeiyi{
+    font-size: 50px;
+    line-height: 120px;
+    margin-left: 30px
+    }
+  .alllink{
+    margin-left: 40px
+    }
+  .row{
+    margin-left: 10px
+    }
+  .el-link.el-link--default{
+    color: #fff;
+    margin-left: 20px
+    }
+  .thanks{
+    margin-top:20px;
+    margin-bottom: 20px
+    }
+  .gif{
+    display: flex;
+    justify-content: flex-start;
+    height: 325px;
+    margin-left: 300px;
+    margin-top: -80px
+    }
+  .gif img{
+    margin-left: -40px;
+    width: 400px
+    }
+  .meitou{
+    margin-top: 65px;
+    margin-bottom: 20px;
+    }
   /* .content{height: 1000px;background: rgb(224, 223, 223);padding: 20px} */
-  .subtitle{margin-top: 30px}
+  .subtitle{
+    margin-top: 30px
+    }
    .text {
     font-size: 14px;
   }
@@ -487,24 +741,65 @@ export default {
   }
 
   .box-card {
-    width: 100%;margin-top: 20px;height: 300px;position: relative;
+    width: 100%;
+    margin-top: 20px;
+    height: 300px;
+    position: relative;
   }
   .newbox-card {
-    width: 100%;margin-top: 20px;height: 200px;position: relative;
+    width: 100%;
+    margin-top: 20px;
+    height: 200px;
+    position: relative;
   }
-  .enlargement{display: flex;justify-content: space-between;}
-  .clu{margin-top: 20px;margin-left: 20px}
-  .mdClu{width: 100%;}
-  .clu li{margin-top: 5px;width: 300px;}
-  .details{display: flex;justify-content: flex-start;}
-  .pdf{float: right;margin-top: -10px}
-  .pdf span{margin-right: 5px;cursor: pointer;}
-  .mdPdf span{margin-right: 5px;cursor: pointer;}
-  .mdPdf{margin-top: 10px;}
-  .el-icon-share{margin-right: 5px}
-  .cardbg,.cardbg1,.cardbg2,.cardbg3,.cardbg4{background: rgb(243, 243, 243);}
-  .block1{width:150px;height: 150px;margin-top: 0px;}
-  .dia{display: flex;}
+  .enlargement{
+    display: flex;
+    justify-content: space-between;
+    }
+  .clu{
+    margin-top: 20px;
+    margin-left: 20px
+    }
+  .mdClu{
+    width: 100%;
+    }
+  .clu li
+  {margin-top: 12px;
+  width: 300px;
+  }
+  .details{
+    display: flex;
+    justify-content: flex-start;
+    }
+  .pdf{
+    float: right;
+    margin-top: -10px
+    }
+  .pdf span{
+    margin-right: 5px;
+    cursor: pointer;
+    }
+  .mdPdf span{
+    margin-right: 5px;
+    cursor: pointer;
+    }
+  .mdPdf{
+    margin-top: 10px;
+    }
+  .el-icon-share{
+    margin-right: 5px
+    }
+  .cardbg,.cardbg1,.cardbg2,.cardbg3,.cardbg4{
+    background: rgb(243, 243, 243);
+    }
+  .block1{
+    width:150px;
+    height: 150px;
+    margin-top: 0px;
+    }
+  .dia{
+    display: flex;
+    }
   /* 下拉框 */
    .el-dropdown-link {
     cursor: pointer;
@@ -513,4 +808,11 @@ export default {
   .el-icon-arrow-down {
     font-size: 12px;
   }
+  .newitem {
+  margin-top: 40px;
+  /* margin-left: 40px; */
+  }
+  .collect{
+    cursor: pointer;
+    }
 </style>

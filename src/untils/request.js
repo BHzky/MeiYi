@@ -14,13 +14,10 @@ axios.defaults.withcredentials = true
 axios.interceptors.request.use((config) => {
     //在发送请求之前如果为post序列化请求参数
     if (config.method === 'post') {
+      console.log(11)
       // config.data = qs.stringify(config.data);
       config.data = config.data;
     }
-    // console.log(localStorage.getItem("token"),"token")
-    // if(!localStorage.getItem("token")){
-    //   alert("500错误")
-    // }
     if(localStorage.getItem("token")){
         config.headers.token=localStorage.getItem("token");
       }

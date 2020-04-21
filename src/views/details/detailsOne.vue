@@ -32,45 +32,61 @@
             </div>
             </el-col>
           </el-row>
-        </el-main>
+        </el-main >
           <el-row>
             <el-col :span="24" class="hidden-sm-and-down">
             <!-- <div id="app"> -->
                 <header class="header" :class="headertop=='#headertop'?'headertop':''">
-                    <a href="javascript:;" :class="active == '#home' ? 'active' : ''" @click="toTarget('#home')">概括</a>
-                    <a href="javascript:;"  :class="active == '#team' ? 'active' : ''"  @click="toTarget('#team')">介绍</a>
-                    <a href="javascript:;"  :class="active == '#contact' ? 'active' : ''"  @click="toTarget('#contact')">背景</a>
-                    <a href="javascript:;"  :class="active == '#join' ? 'active' : ''"  @click="toTarget('#join')">说明</a>
+                    <a href="javascript:;" :class="active == '#home' ? 'active' : ''" @click="toTarget('#home')">概要</a>
+                    <a href="javascript:;"  :class="active == '#team' ? 'active' : ''"  @click="toTarget('#team')">文章内容</a>
+                    <a href="javascript:;"  :class="active == '#contact' ? 'active' : ''"  @click="toTarget('#contact')">相关推荐</a>
+                    <a href="javascript:;"  :class="active == '#join' ? 'active' : ''"  @click="toTarget('#join')">评论</a>
                         <el-link type="primary" class="provide">主要链接</el-link>
                         <el-link type="primary" class="provide" @click="skip">访问新的连接</el-link>
                 </header>
             </el-col>
             <el-col :span="24" class="hidden-sm-and-down">
                 <div id="home">
-                        概括
-                        <div>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念</div>
-                        <div>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念</div>
+                        <span class="subTitle">概要</span>
+                        <div>{{abstractData[0]}}</div>
+                        <div>{{abstractData[0]}}</div>
                 </div>
             </el-col>
             <el-col :span="24" class="hidden-sm-and-down">
                 <div id="team">
-                    介绍
+                    <span class="subTitle">文章内容</span>
+                    <div>第一章：{{newclassifiedDisplay[0]}}</div>
+                    <div>第二章：{{newclassifiedDisplay[0]}}</div>
+                    <div>第三章：{{newclassifiedDisplay[0]}}</div>
+                    <div>第四章：{{newclassifiedDisplay[0]}}</div>
+                    <div>第五章：{{newclassifiedDisplay[0]}}</div>
+                    <div>第六章：{{newclassifiedDisplay[0]}}</div>
+                    <div>第七章：{{newclassifiedDisplay[0]}}</div>
+                    <div>第八章：{{newclassifiedDisplay[0]}}</div>
+                    <div>第九章：{{newclassifiedDisplay[0]}}</div>
+                    <div>第十章：{{newclassifiedDisplay[0]}}</div>
                 </div>
             </el-col>
             <el-col :span="24" class="hidden-sm-and-down">
                 <div id="contact">
-                    背景
+                    <span class="subTitle">相关推荐</span>
+                    <div v-for="(value,i) of recommend" :key="i">
+                        <!-- <span>来源：{{recommend[i].source}}</span> -->
+                        <span>作者：{{recommend[i].author}}</span>
+                        <span class="title">标题：{{recommend[i].title}}</span>
+                        <span>时间：{{recommend[i].time}}</span>
+                    </div>
                 </div>
             </el-col>
             <el-col :span="24" class="hidden-sm-and-down">
-                <div id="join">
-                    说明
+                <div id="join" >
+                    <span class="subTitle">评论</span>
+                    <template > 
+                    <comment></comment>
+                    </template> 
                 </div>
             </el-col>
-            <!-- </div> -->
-            <!-- </el-col> -->
             <el-col :span="24" class="hidden-md-and-up">
-              <!-- <div id="app"> -->
                 <el-col :span="24">
                   <div class="mdHeader">
                       <el-dropdown trigger="click">
@@ -84,11 +100,6 @@
                           <el-dropdown-item @click.native="toTarget1('#join1')">说明</el-dropdown-item>
                         </el-dropdown-menu>
                       </el-dropdown>
-                      <!-- <a href="javascript:;" :class="active == '#home' ? 'active' : ''" @click="toTarget('#home')">概括111</a>
-                      <a href="javascript:;"  :class="active == '#team' ? 'active' : ''"  @click="toTarget('#team')">介绍</a>
-                      <a href="javascript:;"  :class="active == '#contact' ? 'active' : ''"  @click="toTarget('#contact')">背景</a>
-                      <a href="javascript:;"  :class="active == '#join' ? 'active' : ''"  @click="toTarget('#join')">说明</a> -->
-                     
                   </div>
                 </el-col>
                 <el-col :span="24">
@@ -118,10 +129,15 @@
                           <el-link type="primary" class="provide">主要链接</el-link>
                           <el-link type="primary" class="provide" @click="skip">访问新的连接</el-link>
                  </div>
-                <!-- </div> -->
+                </el-col>
+                <el-col :span="24">
+                  <template>
+                  <comment></comment>
+                  </template>
                 </el-col>
             </el-col>
           </el-row>
+          
         <el-footer height="120px">
           <div class="footmeiyi">MEIYI</div>
         </el-footer>
@@ -129,10 +145,15 @@
     </div>
 </template>
 <script>
-import {mapState} from "vuex"
+import {mapState,mapActions} from "vuex"
+import comment from "./comment.vue"
 export default {
+  components: {
+      comment
+    },
  data() {
       return {
+          // recommend:"",
           screenWidth: document.body.clientWidth,
           active: '#home',
           active1: '#home1',
@@ -146,6 +167,11 @@ export default {
         }
     },
     methods:{ 
+      ...mapActions("scientific",[
+          "disConcrete",
+          "disGetDataList",
+      ]),
+       
         toTarget(target){
             console.log(target)
             this.active = target
@@ -160,19 +186,12 @@ export default {
             // });
             },
         toTarget1(target){
-            console.log(target)
+            // console.log(target)
             this.active1 = target
             let toElement = document.querySelector(target);
-            // let container = document.querySelector('#app');
             toElement.scrollIntoView(this.scrollIntoViewOptions);
-            // Velocity(toElement, 'scroll', {
-            //     container: container, 
-            //     duration: 500, 
-            //     offset: -60, 
-            //     easing: 'ease-out'
-            // });
             },
-            onScroll () {
+        onScroll () {
             let scrolled =  document.documentElement.scrollTop || document.body.scrollTop || window.pageYOffset
             if (scrolled < this.distance_team) {
                 this.active = "#home"
@@ -183,9 +202,8 @@ export default {
             } else {
                 this.active = "#join"
             }
-            console.log(scrolled,"11")
-            
             if(scrolled>100 && this.screenWidth>=992){
+              // console.log("oweoir")
                 this.topheight="190px"
                 this.headertop="#headertop"
             }else{
@@ -193,7 +211,7 @@ export default {
                 this.headertop=""
             }
             },
-            skip(){
+         skip(){
               this.$router.push({path: '/detailsTwo'});
             }, 
     },
@@ -217,6 +235,10 @@ export default {
           }
       }
     },
+    created(){
+        this.disConcrete();
+        this.disGetDataList();
+    },
     mounted(){
          // 一次性计算赋值，减少滚动计算节点位置次数
         this.distance_team = document.querySelector('#team').offsetTop - 60
@@ -235,22 +257,46 @@ export default {
         }
     },
     computed:{
-          ...mapState([
-          "show",
-        //   "showdata"
+          ...mapState('scientific',[
+            "concrete",
+            "allData",
         ]),
-        showdata:{
-            get (){
-                return this.$store.state.showdata
-            },
-            set(val){
-                this.$store.state.showdata=val
-            }
-        }
+          showdata(){
+            let data=this.concrete.filter((elem,i,arr)=>{
+             return elem.referId == this.$route.query.referId
+          })
+            return data
+          },
+          //概要
+          abstractData(){
+             return  this.showdata.map((elem)=>{
+                return elem.abstract
+              })
+          },
+          //内容
+          newclassifiedDisplay(){
+            return  this.showdata.map((elem)=>{
+                return elem.content
+              })
+          },
+          related(){
+            let data=this.allData.filter((elem,i,arr)=>{
+             return elem.referId == this.$route.query.referId
+          })
+            return data
+          },
+          recommend(){
+            let data=this.allData.filter((elem,i,arr)=>{
+             return elem.source == this.related[0].source
+          })
+            return data
+          },
       },
       updated(){
-        //   this.onScroll()
-        console.log(document.body.clientWidth,"wwwwwww")
+          // console.log(this.related,"kkkkk")
+          // console.log(this.recommend,"0000")
+          // console.log(this.newclassifiedDisplay,"9999")
+        
       },
 }
 </script>
@@ -273,14 +319,10 @@ export default {
     background-color: #fff;
     color: #fff;
     background: #000;
-    /* font-size: 40px; */
-    /* text-align: center; */
-    /* line-height: 160px; */
-    /* height: 250px; */
   }
 #home,#team,#contact,#join{
   width: 70%;
-  height: 500px;
+  /* height: 500px; */
   color: #000;
   font-size: 15px;
   /* text-align: center; */
@@ -290,6 +332,12 @@ export default {
   border-top: 1px solid #000;
   border-bottom: 1px solid #000;
   position: relative;
+}
+#join{
+  border-bottom: 0px solid ;
+}
+.subTitle{
+  font-size:30px
 }
 #home1,#team1,#contact1,#join1{
   width: 80%;
@@ -340,14 +388,8 @@ export default {
 .mdHeader{
     width: 90%;
     margin: auto;
-    /* height: 300px; */
-    /* position: fixed;  */
-    /* top: 210px; */
-    /* left: 0px; */
-    /* z-index: 1; */
     background: rgb(245, 244, 244);
     display: flex;
-    /* flex-direction: column; */
     display: -webkit-flex;
     justify-content: center;
     margin-top:40px;
@@ -378,5 +420,6 @@ export default {
 .itr>div:nth-child(2){margin-top:5px;margin-bottom: 5px;}
 .newpage{display: flex;flex-direction: column;margin-top: 20px;margin-bottom: 20px;}
 .newpage>.provide:last-child{border: 1px solid #000;width: 40%;margin:20px auto;height: 30px;}
+.title{margin-left:10px;margin-right:10px}
 
 </style>

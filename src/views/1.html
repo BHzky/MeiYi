@@ -8,14 +8,42 @@
 <body>
     <script>
       
-        // var num1="10"
-        // var num2="9"
-        // console.log(num1<num2)
-        if(undefined){
-            alert("11")
-        }else{
-            alert("22")
+    
+     String.prototype.replaces =   function (reg, str) {
+        var arr = [];
+        var newStr = this;
+        console.log(this,"this")
+        // var i = '';
+        var d;
+        while((d = reg.exec(newStr)) != null) {
+            console.log(reg.exec(newStr))
+            console.log(reg)
+            try {
+                if(reg.global) {
+                    arr = newStr.split(d[0]);
+                    console.log(arr)
+                    newStr = arr.join(str);
+                } else {
+                    
+                    var index = d['index'];
+                    var lastindex = (+index) + (+d[0].length);
+                    var preStr = newStr.slice(0, index);
+                    var nextStr = newStr.slice(lastindex);
+                    newStr = preStr + str + nextStr;
+                    break;
+ 
+                }
+ 
+            } catch(e) {
+                console.log(e)
+            }
+ 
         }
+        return newStr
+ 
+    }
+   console.log("hhuuccddhh".replaces(/hh/ig,"qq"))
+
 
     </script>
 </body>

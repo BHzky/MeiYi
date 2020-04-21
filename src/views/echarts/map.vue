@@ -1,33 +1,9 @@
 <template>
     <div id="app">
         <el-container>
-            <el-header>Header</el-header>
+            <el-header>MeiYi科研地图</el-header>
             <el-container>
-                <el-aside width="200px">
-                    <el-menu
-                        default-active="2"
-                        class="el-menu-vertical-demo"
-                        @open="handleOpen"
-                        @close="handleClose"
-                        background-color="#D3DCE6"
-                        text-color="#000"
-                        active-text-color="#409EFF">
-                        <el-menu-item index="1">
-                            <i class="el-icon-menu"></i>
-                            <span slot="title">地图展示</span>
-                        </el-menu-item>
-                        <el-menu-item index="2">
-                            <i class="el-icon-document"></i>
-                            <span slot="title">可视化</span>
-                        </el-menu-item>
-                        <el-menu-item index="3">
-                            <i class="el-icon-setting"></i>
-                            <span slot="title">数据展示</span>
-                        </el-menu-item>
-                    </el-menu>
-                </el-aside>
                 <el-main>
-                    <!-- <div class="mapsearch"> -->
                         <el-autocomplete
                         class="search"
                         popper-class="autoAddressClass"
@@ -45,12 +21,28 @@
                             </div>
                         </template>
                         </el-autocomplete>
-                        <el-button type="primary">查找附近图书馆</el-button>
-                    <!-- </div> -->
-                    <div class="show">
+                        <el-button type="primary" class="nearby" @click="dialogVisible = true">查看分布</el-button>
+                        <el-dialog class="choose"
+                        :visible.sync="dialogVisible"
+                        width="30%"
+                        >
+                        <div class="suspension">
+                            <div class="cricle" @click="nation">
+                                <div>全国</div>
+                            </div>
+                            <div class="cricle">
+                                <div>下转</div>
+                            </div>
+                            <div class="cricle">
+                                <div>下转</div>
+                            </div>
+                        </div>
+                        </el-dialog>
+                    <div>
                         <div id="map-container" class="ditu"></div>
                     </div>
                 </el-main>
+
             </el-container>
         </el-container>
         <!-- 搜索框 -->
@@ -65,6 +57,7 @@
 export default {
      data() {
       return {
+            dialogVisible: false,
             form: {
                 address: '', //详细地址
                 addrPoint: { //详细地址经纬度
@@ -77,7 +70,10 @@ export default {
             }  
     },
     methods:{
-         initMap() {
+        nation(){
+            this.$router.push("echarts")
+        },
+        initMap() {
             var that = this;
             this.map = new BMap.Map("map-container", {enableMapClick:false},{enableBizAuthLogo: false})  //新建地图实例，enableMapClick:false ：禁用地图默认点击弹框
             var point = new BMap.Point(116.404, 39.915);
@@ -95,9 +91,9 @@ export default {
             var opts = {    
                 width : 250,     // 信息窗口宽度    
                 height: 100,     // 信息窗口高度    
-                title : "显示"  // 信息窗口标题   
+                title : "说明"  // 信息窗口标题   
             }    
-            var infoWindow = new BMap.InfoWindow("点击获得图书馆位置信息", opts);  // 创建信息窗口对象    
+            var infoWindow = new BMap.InfoWindow("可以查看附近具有相同爱好者的分布情况", opts);  // 创建信息窗口对象    
             this.mk.addEventListener("click",function(e){
                 this.map.openInfoWindow(infoWindow,e.point); 
             })
@@ -172,31 +168,37 @@ export default {
 </script>
 <style  scoped>
   .el-header, .el-footer {
-    background-color: #B3C0D1;
-    color: #333;
-    text-align: center;
+    background-color: #000;
+    color: #fff;
+    text-align: left;
     line-height: 60px;
   }
    .el-aside {
-    background-color: #D3DCE6;
+    background-color: #333;
     color: #333;
     text-align: center;
     line-height: 200px;
   }
   .el-main {
-    background-color: #E9EEF3;
+    background-color: #333;
     color: #333;
     /* text-align: center; */
     line-height: 100px;
+    padding: 0 !important;
+    min-height: calc(100vh - 120px)
   }
    body > .el-container {
     margin-bottom: 40px;
   }
 /* #app{display: flex;flex-direction: column} */
 /* .mapsearch{display: flex;} */
-.search{width: 60%;margin-right: 20px;}
-.ditu{width: 90%;height: 500px;}
+.search{width: 30%;left: 20px;position: absolute;top: 50px;z-index: 99;}
+.nearby{left: 500px;position: absolute;top:80px;z-index: 99;}
+.ditu{width: 100%;position: relative;z-index: 1;min-height: calc(100vh - 60px)}
 /* .show{display: flex;justify-content: space-around} */
-.nearby{width: 30%;margin: auto}
 .mapDetails{margin-bottom: 10px}
+.choose{opacity: 0.8;margin-top: 150px !important;border-radius: 10px;}
+.cricle{width: 50px;height: 50px;border-radius: 50%;background: forestgreen;line-height: 50px;color: #fff;display: flex;}
+.cricle>div{margin: auto;}
+.suspension{display: flex;justify-content: space-around;}
 </style>

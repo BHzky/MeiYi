@@ -43,7 +43,7 @@
               <div style="margin-top:100px;">
                     <el-carousel :interval="4000"  height="400px">
                       <el-carousel-item v-for="item in 4" :key="item">
-                        <img style="width:100%" :src="`/img/index/recommend${item}.jpg`" alt="">
+                        <img @click="carousel" style="width:100%" :src="`/img/index${item}.jpg`" alt="">
                       </el-carousel-item>
                     </el-carousel>
               </div>
@@ -52,7 +52,7 @@
               <div>
                     <el-carousel :interval="4000" height="200px" arrow="always">
                       <el-carousel-item v-for="item in 4" :key="item">
-                        <img style="width:100%" :src="`/img/index/recommend1.jpg`" alt="">
+                        <img style="width:100%" :src="`/img/index${item}.jpg`" alt="">
                       </el-carousel-item>
                     </el-carousel>
               </div>
@@ -66,32 +66,31 @@
                 <i class="el-icon-video-camera-solid"></i>
                 <el-link>体验计划</el-link>
               </div>
-              <el-button type="info" size="mini" style="width:100px;margin:auto" @click="joinMap">进入地图</el-button>
+              <el-button type="info" size="mini" style="width:100px;margin:auto" @click="joinMap">进入体验</el-button>
             </div>
           </el-col>
             <el-col :lg="{span:16,offset:4}" :md="{span:16,offset:4}">
               <div class="like">
                 <span> <div></div> <span>猜你喜欢</span></span>
-                <el-link> <i class="el-icon-refresh"></i> 换一批</el-link>
+                <el-link @click="anotherBatch"> <i class="el-icon-refresh"></i> 换一批</el-link>
               </div>
             </el-col>
             <el-col :lg="{span:16,offset:4}" :md="{span:16,offset:4}" class="hidden-sm-and-down">
               <div class="demo-image likeImage">
-                <div class="block" v-for="fit in 5" :key="fit">
-                  <el-image
+                <div class="block" v-for="fit in likeNumber" :key="fit">
+                  <img
                     style="width: 95%;height:95%"
-                    :src="url">
-                  </el-image>
+                    :src="fit"
+                    >
                 </div>
               </div>
             </el-col>
             <el-col :lg="{span:16,offset:3}" class="hidden-sm-and-up">
               <div class="demo-image likeImage">
-                <div class="block" v-for="fit in 4" :key="fit">
-                  <el-image
+                <div class="block" v-for="fit in mdlikeNumber" :key="fit">
+                  <img
                     style="width: 95%;height:95%"
-                    :src="url">
-                  </el-image>
+                    :src="fit">
                 </div>
               </div>
             </el-col>
@@ -104,20 +103,18 @@
             <el-col :lg="{span:16,offset:4}" :md="{span:16,offset:4}" class="hidden-sm-and-down">
               <div class="demo-image likeImage">
                 <div class="block" v-for="fit in 5" :key="fit">
-                  <el-image
+                  <img
                     style="width: 95%;height:95%"
                     :src="url">
-                  </el-image>
                 </div>
               </div>
             </el-col>
             <el-col :lg="{span:16,offset:3}"  class="hidden-sm-and-up">
               <div class="demo-image likeImage">
                 <div class="block" v-for="fit in 4" :key="fit">
-                  <el-image
+                  <img
                     style="width: 95%;height:95%"
                     :src="url">
-                  </el-image>
                 </div>
               </div>
             </el-col>
@@ -130,20 +127,18 @@
             <el-col :lg="{span:16,offset:4}" :md="{span:16,offset:4}" class="hidden-sm-and-down">
               <div class="demo-image likeImage">
                 <div class="block" v-for="fit in 5" :key="fit">
-                  <el-image
+                  <img
                     style="width: 95%;height:95%"
                     :src="url">
-                  </el-image>
                 </div>
               </div>
             </el-col>
             <el-col :lg="{span:16,offset:3}" class="hidden-sm-and-up">
               <div class="demo-image likeImage">
                 <div class="block" v-for="fit in 4" :key="fit">
-                  <el-image
+                  <img
                     style="width: 95%;height:95%"
                     :src="url">
-                  </el-image>
                 </div>
               </div>
             </el-col>
@@ -163,17 +158,6 @@
                 </div>
               </div>
             </el-col>
-            <!-- <el-col :lg="{span:24,offset:0}" :md="{span:18,offset:3}">
-            <el-card class="box-card">
-              <div slot="header" class="clearfix">
-                <span>卡片名称</span>
-                <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
-              </div>
-              <div v-for="o in 4" :key="o" class="text item">
-                {{'列表内容 ' + o }}
-              </div>
-            </el-card>
-            </el-col> -->
             <el-col :lg="{span:18,offset:3}">
                <el-divider></el-divider>
             </el-col>
@@ -223,7 +207,7 @@
                 <i class="el-icon-video-camera-solid"></i>
                 <el-link>体验计划</el-link>
               </div>
-              <el-button type="info" size="mini" style="width:100px;margin:auto" @click="joinMap">进入地图</el-button>
+              <el-button type="info" size="mini" style="width:100px;margin:auto" @click="joinMap">进入体验</el-button>
             </div>
           </el-col>
         </el-row>
@@ -238,6 +222,20 @@ import {mapState} from "vuex"
 export default {
  data() {
       return {
+          likeNumber:[
+            '/img/like/like1.jpg',
+            '/img/like/like2.jpg',
+            '/img/like/like3.jpg',
+            '/img/like/like4.jpg',
+            '/img/like/like5.jpg',
+            '/img/like/like6.jpg'
+            ],
+          mdlikeNumber:[
+            '/img/like/like1.jpg',
+            '/img/like/like2.jpg',
+            '/img/like/like3.jpg',
+            '/img/like/like4.jpg',
+          ],
           activeName: '',
           input:"",
           url: '/img/recommend_details/recommend_details1.jpg',
@@ -253,6 +251,47 @@ export default {
         }
     },
     methods:{ 
+      carousel(){
+        console.log(1)
+      },
+      anotherBatch(){
+        console.log("99")
+        if(this.likeNumber[0]==='/img/like/like1.jpg'){
+            this.likeNumber=[
+            '/img/like/like7.jpg',
+            '/img/like/like8.jpg',
+            '/img/like/like9.jpg',
+            '/img/like/like10.jpg',
+            '/img/like/like11.jpg',
+            '/img/like/like12.jpg'
+            ]
+        }else if(this.likeNumber[0]==='/img/like/like7.jpg'){
+          this.likeNumber=[
+            '/img/like/like1.jpg',
+            '/img/like/like2.jpg',
+            '/img/like/like3.jpg',
+            '/img/like/like4.jpg',
+            '/img/like/like5.jpg',
+            '/img/like/like6.jpg'
+            ]
+        }
+        if(this.mdlikeNumber[0]==='/img/like/like1.jpg'){
+            this.mdlikeNumber=[
+            '/img/like/like5.jpg',
+            '/img/like/like6.jpg',
+            '/img/like/like7.jpg',
+            '/img/like/like8.jpg',
+            ]
+        }else if(this.mdlikeNumber[0]==='/img/like/like7.jpg'){
+          this.mdlikeNumber=[
+            '/img/like/like1.jpg',
+            '/img/like/like2.jpg',
+            '/img/like/like3.jpg',
+            '/img/like/like4.jpg',
+            ]
+        }
+        
+      },
       //未登录时候的提示
       unlisted(){
         this.$message({
@@ -287,11 +326,11 @@ export default {
             // this.unlisted()
           // }
         }else if(tab.label==="我的"){
-          if(this.islogin){
-            this.$router.push({path: '/mine'})
-          }else{
-            this.unlisted()
-          }
+          // if(this.islogin){
+            this.$router.push({path: '/map'})
+          // }else{
+            // this.unlisted()
+          // }
         }
       },
       // 循环向左滚动
@@ -349,15 +388,13 @@ export default {
           }else{
             return true
           }
-          // if(localStorage.getItem("token")){return true}
-          // if(sessionStorage.getItem("token")){return true}
         }
 
       },
       updated(){
         //   this.onScroll()
-        console.log(this.show,"22")
-        console.log(this.islogin,"00")
+        // console.log(this.show,"22")
+        // console.log(this.islogin,"00")
         
       },
 }
@@ -367,7 +404,7 @@ export default {
     background-color: #B3C0D1;
     color: #fff;
     line-height: 60px;
-    background: rgb(43, 42, 42);
+    background: #000;
     z-index: 999;
     font-size: 20px;
   }
@@ -376,7 +413,7 @@ export default {
   .el-main {
     background-color: #fff;
     color: #000;
-    background: rgb(241, 239, 239);
+    background: #fff;
   }
   .echarts{
   width: 140px;

@@ -123,24 +123,13 @@
                     <ul class="fuzzylookup" v-if="state">
                         <li v-for="(item,index) in list" :key="index" >
                           <span @click="searchSkip">{{item}}</span>
-                          <!-- <span>{{item.id}}</span>
-                          <span>{{item.name}}</span>
-                          <span>{{item.time}}</span> -->
                         </li>
                     </ul>
                     <ul class="fuzzylookup" v-else>
                         <li v-for="(item,index) in dataList" :key="index" >
                           <span @click="searchSkip">{{item}}</span>
-                          <!-- <span>{{item.id}}</span> -->
-                          <!-- <span>{{item.name}}</span> -->
-                          <!-- <span>{{item.time}}</span> -->
                         </li>
                     </ul>
-                    <!-- <el-table :data="gridData">
-                      <el-table-column property="date" label="hate" width="150"></el-table-column>
-                      <el-table-column property="name" label="class" width="200"></el-table-column>
-                      <el-table-column property="address" label="international"></el-table-column>
-                    </el-table> -->
                      <div slot="footer" class="dialog-footer">
                       <el-button @click="dialogTableVisible = false">取 消</el-button>
                       <el-button type="primary" @click="dialogTableVisible = false">确 定</el-button>
@@ -155,10 +144,10 @@
                       v-model="textarea2">
                     </el-input>
                     <div class="thanks">感谢提供您宝贵的意见</div>
-                    <el-input v-model="input" placeholder="请输入您的邮箱，方便我们与您联系"></el-input>
+                    <el-input v-model="inputEmail" placeholder="请输入您的邮箱，方便我们与您联系"></el-input>
                      <div slot="footer" class="dialog-footer">
                       <el-button @click="newdialogTableVisible = false">取 消</el-button>
-                      <el-button type="primary" @click="newdialogTableVisible = false">确 定</el-button>
+                      <el-button type="primary" @click="sureAdvise">确 定</el-button>
                     </div>
           </el-dialog>
         <el-footer height="120px">
@@ -168,7 +157,7 @@
     </div>
 </template>
 <script>
-import {getList} from "../assets/js/apis/scientific.js"
+import {getList,disAdvise} from "../assets/js/apis/scientific.js"
 // import {getList} from "../assets/js/apis/details.js"
 import {mapState,mapActions} from "vuex"
 import deTails from "./details/details"
@@ -180,50 +169,13 @@ export default {
         address: 'international'
       };
       return {
-        sub_title:[
-          "电脑","人文","动物","科技","自然"
-        ],
+        inputEmail:"",
         titleinput:"",
         input_value:"",
         state:false,
-        statu:true,
-        // dataList:[
-        //     { id: "1001", name: "哈哈", time: "20170207" },
-        //     { id: "1002", name: "呵呵", time: "20170213" },
-        //     { id: "1206", name: "嘻嘻", time: "20170208" },
-        //     { id: "1206", name: "嘻嘻", time: "20170208" },
-        //       ],    
-         list:[],
-         textarea2: '',
-         gridData: [{
-          date: 'hate',
-          name: 'class',
-          address: 'international'
-        },{
-          date: 'hate',
-          name: 'class',
-          address: 'international'
-        },{
-          date: 'hate',
-          name: 'class',
-          address: 'international'
-        },{
-          date: 'hate',
-          name: 'class',
-          address: 'international'
-        },{
-          date: 'hate',
-          name: 'class',
-          address: 'international'
-        },{
-          date: 'hate',
-          name: 'class',
-          address: 'international'
-        },{
-          date: 'hate',
-          name: 'class',
-          address: 'international'
-        },],
+        statu:true,   
+        list:[],
+        textarea2: '',
         dialogTableVisible: false,
         newdialogTableVisible: false,
         input:"",
@@ -234,17 +186,32 @@ export default {
       ...mapActions("scientific",[
           "disGetDataList"
       ]),
+      sureAdvise(){
+        this.newdialogTableVisible = false
+        let param = {
+          content:this.textarea2,
+          email:this.inputEmail,
+        }
+        disAdvise(param).then((res)=>{
+          if(res.affectedRows>0){
+            this.$message({
+              message: '谢谢您提供宝贵的建议，请注意邮箱的查收',
+              type: 'success'
+            });
+          }else{
+            this.$message({
+              message: '提交失败，请您重新提交',
+              type: 'warning'
+            });
+          }
+        })
+        
+      },
       skip(){
          this.$router.push({
            path:'/details',
            query:{source:this.titleinput}
            })
-        //  this.showdata=[]
-        //  this.show.map((elem)=>{
-        //    if(elem.content.indexOf(this.titleinput)!=-1){
-        //      this.showdata.unshift(elem)
-        //    }
-        //  })
       },
       //浮动框的跳转
       searchSkip(e){
@@ -262,13 +229,6 @@ export default {
            path:'/details',
            query:{source:font}
            })
-        //  this.showdata=[]
-        //  console.log(this.allData,"000")
-        //  this.allData.map((elem)=>{
-        //    if(elem.source.indexOf(font)!=-1){
-        //      this.showdata.unshift(elem)
-        //    }
-        //  })
       },
       //触发keyup事件之后触发的方法
             search(){
@@ -385,11 +345,11 @@ export default {
   .works ul li{margin-top:20px;}
   .works ul li:not(:nth-child(1)){color: rgb(61, 155, 243)}
   .contact{width: 100%;height: 200px;background: rgb(218, 215, 215)}
-  .contactus{margin-left: 40px;margin-top:40px}
+  .contactus{margin-left: 40px;padding-top:20px}
   .contactdetails{width: 300px;margin-left: 300px}
   .contactreact{margin-left: 260px;margin-top: 20px;color:rgb(61, 155, 243)}
   .footmeiyi{font-size: 50px;line-height: 120px;margin-left: 30px}
-  .alllink{margin-left: 20px}
+  .alllink{margin-left: 40px}
   .row{margin-left: 10px}
   .el-link.el-link--default{color: #fff;margin-left: 20px}
   .thanks{margin-top:20px;margin-bottom: 20px}
