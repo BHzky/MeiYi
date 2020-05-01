@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import index from "./modules/index"
 import scientific from "./modules/scientific"
+import scholar from './modules/scholar'
 import getters from "./getters"
 
 Vue.use(Vuex)
@@ -22,6 +23,7 @@ export default new Vuex.Store({
   modules: {
     index,
     scientific,
+    scholar
   },
   getters
 })

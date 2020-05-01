@@ -6,45 +6,12 @@
     <title>Document</title>
 </head>
 <body>
+    <div style="width: 200px;">12345678ewremtpoinb9eusrenoidpam[cvfpoiesnuignri9</div>
+    <div>12345678ewremtpoinb9eusrenoidpam[cvfpoiesnuignri9</div>
+    <div>12345678ewremtpoinb9eusrenoidpam[cvfpoiesnuignri9</div>
+    <div>12345678ewremtpoinb9eusrenoidpam[cvfpoiesnuignri9</div>
     <script>
-      
-    
-     String.prototype.replaces =   function (reg, str) {
-        var arr = [];
-        var newStr = this;
-        console.log(this,"this")
-        // var i = '';
-        var d;
-        while((d = reg.exec(newStr)) != null) {
-            console.log(reg.exec(newStr))
-            console.log(reg)
-            try {
-                if(reg.global) {
-                    arr = newStr.split(d[0]);
-                    console.log(arr)
-                    newStr = arr.join(str);
-                } else {
-                    
-                    var index = d['index'];
-                    var lastindex = (+index) + (+d[0].length);
-                    var preStr = newStr.slice(0, index);
-                    var nextStr = newStr.slice(lastindex);
-                    newStr = preStr + str + nextStr;
-                    break;
- 
-                }
- 
-            } catch(e) {
-                console.log(e)
-            }
- 
-        }
-        return newStr
- 
-    }
-   console.log("hhuuccddhh".replaces(/hh/ig,"qq"))
-
-
+        console.log(11)
     </script>
 </body>
 </html>

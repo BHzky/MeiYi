@@ -3,17 +3,18 @@
       <el-container>
         <el-header fixed height="60px" class="top">
           <el-row>
-            <el-col :lg="{span:3,offset:2}" :md="{span:5}" :sm="{span:5}" :xs="{span:10}"><div>MeiYI图书馆</div></el-col>
-            <el-col :lg="{span:4,offset:2}" :md="{span:6}" class="hidden-sm-and-down">
+            <el-col :lg="{span:3,offset:2}" :md="{span:5}" :sm="{span:5}" :xs="{span:11}"><div>MeiYI图书馆</div></el-col>
+            <el-col :lg="{span:6,offset:2}" :md="{span:7}" class="hidden-sm-and-down">
               <template>
                 <el-tabs v-model="activeName" @tab-click="handleClick">
-                  <el-tab-pane label="发现" name="first"></el-tab-pane>
                   <el-tab-pane label="科研" name="second"></el-tab-pane>
-                  <el-tab-pane label="我的" name="three"></el-tab-pane>
+                  <el-tab-pane label="地图" name="three"></el-tab-pane>
+                  <el-tab-pane label="学者" name="four"></el-tab-pane>
+                  <el-tab-pane label="我的" name="first"></el-tab-pane>
                 </el-tabs>
               </template>
             </el-col>
-            <el-col :span="4" :offset="1" class="hidden-sm-and-down">
+            <el-col :span="3" :offset="1" class="hidden-sm-and-down">
               <el-input v-model="input" placeholder="请输入内容">
                 <el-button slot="append" icon="el-icon-search" type="primary"></el-button>
               </el-input>
@@ -32,7 +33,7 @@
             <el-col :lg="{span:1,offset:0}" :md="{span:2,offset:0}" :sm="{span:5,offset:0}" :xs="{span:4}" v-show="regLogin">
               <el-link class="el-icon-s-custom" href="/login">登录</el-link>
             </el-col> -->
-             <el-col :lg="{span:1,offset:6}" :md="{span:2,offset:6}" :sm="{span:5,offset:0}" :xs="{span:4,offset:10}">
+             <el-col :lg="{span:1,offset:6}" :md="{span:2,offset:6}" :sm="{span:5,offset:0}" :xs="{span:4,offset:9}">
               <el-link class="el-icon-s-custom" href="/login" @click.native="logOff">注销</el-link>
             </el-col>
           </el-row>
@@ -41,9 +42,9 @@
           <el-row>
             <el-col :lg="{span:16,offset:4}" :md="{span:22,offset:1}" :sm="{span:8,offset:10}" class="hidden-sm-and-down">
               <div style="margin-top:100px;">
-                    <el-carousel :interval="4000"  height="400px">
+                    <el-carousel :interval="4000"  height="400px" ref="carousel" @click.native="carousel">
                       <el-carousel-item v-for="item in 4" :key="item">
-                        <img @click="carousel" style="width:100%" :src="`/img/index${item}.jpg`" alt="">
+                        <img style="width:100%" :src="`/img/index${item}.jpg`" alt="">
                       </el-carousel-item>
                     </el-carousel>
               </div>
@@ -66,7 +67,7 @@
                 <i class="el-icon-video-camera-solid"></i>
                 <el-link>体验计划</el-link>
               </div>
-              <el-button type="info" size="mini" style="width:100px;margin:auto" @click="joinMap">进入体验</el-button>
+              <el-button type="info" size="mini" style="width:100px;margin:auto" @click="joinMap">进入社区</el-button>
             </div>
           </el-col>
             <el-col :lg="{span:16,offset:4}" :md="{span:16,offset:4}">
@@ -77,7 +78,7 @@
             </el-col>
             <el-col :lg="{span:16,offset:4}" :md="{span:16,offset:4}" class="hidden-sm-and-down">
               <div class="demo-image likeImage">
-                <div class="block" v-for="fit in likeNumber" :key="fit">
+                <div class="block" v-for="(fit,i) of likeNumber" :key="i" ref="block" @click="block(fit)">
                   <img
                     style="width: 95%;height:95%"
                     :src="fit"
@@ -207,7 +208,7 @@
                 <i class="el-icon-video-camera-solid"></i>
                 <el-link>体验计划</el-link>
               </div>
-              <el-button type="info" size="mini" style="width:100px;margin:auto" @click="joinMap">进入体验</el-button>
+              <el-button type="info" size="mini" style="width:100px;margin:auto" @click="joinMap">进入社区</el-button>
             </div>
           </el-col>
         </el-row>
@@ -251,8 +252,18 @@ export default {
         }
     },
     methods:{ 
+      block(fit){
+        this.$router.push({
+           path:'/likeDetails',
+           query:{uid:fit}
+           })
+      },
       carousel(){
-        console.log(1)
+        // this.$router.push("")
+        this.$router.push({
+           path:'/recommend',
+           query:{uid:this.$refs.carousel.activeIndex}
+           })
       },
       anotherBatch(){
         console.log("99")
@@ -302,7 +313,7 @@ export default {
       //进入地图
       joinMap(){
       //   if(this.islogin){
-          this.$router.push("echarts")
+          this.$router.push("move")
       //   }else{
       //     this.unlisted()
       //   }
@@ -320,23 +331,20 @@ export default {
         handleClick(tab, event) {
         console.log(tab, event,"22");
         if(tab.label==="科研"){
-          // if(this.islogin){
             this.$router.push({path: '/scientific'})
-          // }else{
-            // this.unlisted()
-          // }
-        }else if(tab.label==="我的"){
-          // if(this.islogin){
+        }else if(tab.label==="学者"){
+            this.$router.push({path: '/scholar'})
+        }else if(tab.label==="地图"){
             this.$router.push({path: '/map'})
-          // }else{
-            // this.unlisted()
-          // }
+        }else if(tab.label==="我的"){
+            this.$router.push({path: '/personal'})
         }
       },
       // 循环向左滚动
       //鼠标悬停，停止滚动
 			stopScroll () {
-				var target = this.$refs.contlist;
+        var target = this.$refs.contlist;
+        console.log(target)
 				clearInterval(this.scrollTime)
 			},
 			//鼠标移开 ，接着滚动
@@ -360,8 +368,6 @@ export default {
 				        initLeft = 0;
 				    }
 					target.style.left = '-'+ initLeft +'px';//获取不到translateX的值改用 left
-					
-					//target.style = 'transform: translateX(-'+ initLeft +'px)';
 				},16)
 			}
     },

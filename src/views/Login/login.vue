@@ -79,8 +79,8 @@
 </el-container>
 </div>
 </template>
-
 <script>
+import move from './move'
 import SIdentify from "./canvas"
 import {getLogin} from "../../assets/js/apis/login.js"
 import {mapState} from "vuex"
@@ -257,7 +257,8 @@ export default {
       },
   // 引入验证的组件
   components: {
-    SIdentify
+    SIdentify,
+    move
   },
 }
 </script>

@@ -8,9 +8,16 @@ import detailsOne from "../views/details/detailsOne"
 import detailsTwo from "../views/details/detailsTwo"
 import comment from "../views/details/comment"
 import login from "../views/Login/login"
+import move from "../views/Login/move"
 import reg from "../views/Login/reg"
 import map from "../views/echarts/map"
 import echarts from "../views/echarts/echarts"
+import scholar from '../views/scholar/scholar'
+import scholarDetails from '../views/scholar/scholarDetails'
+import carousel from '../views/scholar/carousel'
+import recommend from '../views/recommend/recommend'
+import likeDetails from '../views/recommend/likeDetails'
+import personal from '../views/personal/personal'
 
 Vue.use(VueRouter)
 
@@ -46,9 +53,16 @@ const routes = [
   {path:"/detailsTwo",name:"detailsTwo",component:detailsTwo},
   {path:"/comment",name:"comment",component:comment},
   {path:"/login",name:"login",component:login},
+  {path:"/move",name:"move",component:move},
   {path:"/reg",name:"reg",component:reg},
   {path:"/map",name:"map",component:map,meta:{requiresAuth: true}},
   {path:"/echarts",name:"echarts",component:echarts},
+  {path:"/scholar",name:"scholar",component:scholar},
+  {path:"/scholarDetails",name:"scholarDetails",component:scholarDetails},
+  {path:"/carousel",name:"carousel",component:carousel},
+  {path:"/recommend",name:"recommend",component:recommend},
+  {path:"/likeDetails",name:"likeDetails",component:likeDetails},
+  {path:"/personal",name:"personal",component:personal},
   // {
   //   path: '/about',
   //   name: 'about',
