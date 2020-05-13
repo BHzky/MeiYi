@@ -12,34 +12,64 @@
                             </el-breadcrumb>
                         </div>
                     </el-col>
-                    <el-col :span="6" :offset="3">
+                    <el-col :span="6" :offset="3" class="hidden-sm-and-down">
                         <div class="itr">
                             <span>{{scholarData.length}}</span>
                             位学者入驻
                         </div>
                     </el-col>
-                    <el-col :span="6">
+                    <el-col :span="8" :offset="0" class="hidden-md-and-up">
+                        <div class="itr">
+                            <span>{{scholarData.length}}</span>
+                            位学者入驻
+                        </div>
+                    </el-col>
+                    <el-col :span="6" class="hidden-sm-and-down">
                         <div class="itr">
                             <span>{{scholarAll.length}}</span>
                             篇文章发表
                         </div>
                     </el-col>
-                    <el-col :span="6">
+                    <el-col :span="8" class="hidden-md-and-up">
+                        <div class="itr">
+                            <span>{{scholarAll.length}}</span>
+                            篇文章发表
+                        </div>
+                    </el-col>
+                    <el-col :span="6" class="hidden-sm-and-down">
                         <div class="itr">
                             <span>{{scholarData.length}}</span>
                             项自主研究成果
                         </div>
                     </el-col>
-                    <el-col :span="18" :offset="3">
+                    <el-col :span="8" class="hidden-md-and-up">
+                        <div class="itr">
+                            <span>{{scholarData.length}}</span>
+                            项自主研究成果
+                        </div>
+                    </el-col>
+                    <el-col :span="18" :offset="3" class="hidden-sm-and-down">
                         <div class="classify">
                             <div class="apply" @click="apply">申请入驻</div>
                         </div>
                     </el-col>
-                    <el-col :span="24">
+                    <el-col :span="20" :offset="1" class="hidden-md-and-up">
+                        <div class="classify">
+                            <div class="apply" @click="apply">申请入驻</div>
+                        </div>
+                    </el-col>
+                    <el-col :span="24" class="hidden-sm-and-down">
+                        <myCarousel>
+                            <!-- <template slot-scope="a">
+                                {{a}}
+                            </template> -->
+                        </myCarousel>
+                    </el-col>
+                    <el-col :span="20" :offset="2" class="hidden-md-and-up">
                         <myCarousel>
                         </myCarousel>
                     </el-col>
-                    <el-col :span="10" :offset="3">
+                    <el-col :span="10" :offset="3" class="hidden-sm-and-down">
                         <div class="famous"><i class="el-icon-s-custom" style="margin-right:10px"></i>知名学者</div>
                         <div class="honour">
                             <div class="honourLeft">
@@ -62,10 +92,43 @@
                             </div>
                         </div>
                     </el-col>
-                    <el-col :span="7" :offset="1">
+                    <el-col :span="24" :offset="0" class="hidden-md-and-up">
+                        <div class="famous"><i class="el-icon-s-custom" style="margin-right:10px"></i>知名学者</div>
+                        <div class="honour">
+                            <div class="honourLeft">
+                                <div class="Smfam" v-for="item in items" :key="item.name" @click="famous">
+                                    <img :src="item.name" alt="">
+                                    <div class="name-of-scholar">
+                                        <div>学者</div>
+                                        <div>{{scholarData[item.tag]}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="honourRight">
+                                <div v-for="item in itemsTwo" :key="item.name">
+                                    <img :src="item.name" alt="">
+                                    <div class="name-of-scholar">
+                                        <div>学者</div>
+                                        <div>{{scholarData[item.tag]}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </el-col>
+                    <el-col :span="7" :offset="1"  class="hidden-sm-and-down">
                         <div>
                             <div class="famous"><i class="el-icon-star-off" style="margin-right:10px"></i>学者风采</div>
                             <div class="elegant" v-for="(value,i) in 4" :key="i">
+                                [期刊论文{{i+1}}]
+                                <div>{{elegantAuthor[i]}}</div>
+                                <!-- <div>author:{{i.author}}</div> -->
+                            </div>
+                        </div>
+                    </el-col>
+                    <el-col :span="24" :offset="0" class="hidden-md-and-up">
+                        <div>
+                            <div class="famous"><i class="el-icon-star-off" style="margin-right:10px"></i>学者风采</div>
+                            <div class="SMelegant" v-for="(value,i) in 4" :key="i">
                                 [期刊论文{{i+1}}]
                                 <div>{{elegantAuthor[i]}}</div>
                                 <!-- <div>author:{{i.author}}</div> -->
@@ -264,6 +327,14 @@ export default {
   }
   .elegant{
       height: 100px;
+      line-height: 30px;
+      background: #fff;
+      border-bottom: 1px dashed #000;
+      text-align: left;
+      padding-left: 10px;
+  }
+  .SMelegant{
+      height: 130px;
       line-height: 30px;
       background: #fff;
       border-bottom: 1px dashed #000;

@@ -29,7 +29,7 @@ export default {
     },
     colorMin: {
       type: Number,
-      default: 50
+      default: 60
     },
     colorMax: {
       type: Number,
@@ -57,7 +57,7 @@ export default {
     },
     contentHeight: {
       type: Number,
-      default: 38
+      default: 40
     }
   },
   methods: {
@@ -125,7 +125,7 @@ export default {
     },
     drawDot(ctx) {
       // 绘制干扰点
-      for (let i = 0; i < 100; i++) {
+      for (let i = 0; i < 20; i++) {
         ctx.fillStyle = this.randomColor(0, 255)
         ctx.beginPath()
         ctx.arc(

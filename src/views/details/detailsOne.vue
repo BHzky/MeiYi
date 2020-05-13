@@ -94,34 +94,53 @@
                           SELECT<i class="el-icon-arrow-down el-icon--right"></i>
                         </span>
                         <el-dropdown-menu slot="dropdown">
-                          <el-dropdown-item @click.native="toTarget1('#home1')">概括</el-dropdown-item>
-                          <el-dropdown-item @click.native="toTarget1('#team1')">介绍</el-dropdown-item>
-                          <el-dropdown-item @click.native="toTarget1('#contact1')">背景</el-dropdown-item>
-                          <el-dropdown-item @click.native="toTarget1('#join1')">说明</el-dropdown-item>
+                          <el-dropdown-item @click.native="toTarget1('#home1')">概要</el-dropdown-item>
+                          <el-dropdown-item @click.native="toTarget1('#team1')">文章内容</el-dropdown-item>
+                          <el-dropdown-item @click.native="toTarget1('#contact1')">相关推荐</el-dropdown-item>
+                          <el-dropdown-item @click.native="toTarget1('#join1')">评论</el-dropdown-item>
                         </el-dropdown-menu>
                       </el-dropdown>
                   </div>
                 </el-col>
                 <el-col :span="24">
                   <div id="home1">
-                          概括
-                          <div>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念</div>
-                          <div>与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念</div>
+                        <span class="subTitle">概要</span>
+                        <div>{{abstractData[0]}}</div>
+                        <div>{{abstractData[0]}}</div>
                   </div>
                 </el-col>
                 <el-col :span="24">
                   <div id="team1">
-                      介绍
+                        <span class="subTitle">文章内容</span>
+                        <div>第一章：{{newclassifiedDisplay[0]}}</div>
+                        <div>第二章：{{newclassifiedDisplay[0]}}</div>
+                        <div>第三章：{{newclassifiedDisplay[0]}}</div>
+                        <div>第四章：{{newclassifiedDisplay[0]}}</div>
+                        <div>第五章：{{newclassifiedDisplay[0]}}</div>
+                        <div>第六章：{{newclassifiedDisplay[0]}}</div>
+                        <div>第七章：{{newclassifiedDisplay[0]}}</div>
+                        <div>第八章：{{newclassifiedDisplay[0]}}</div>
+                        <div>第九章：{{newclassifiedDisplay[0]}}</div>
+                        <div>第十章：{{newclassifiedDisplay[0]}}</div>
                   </div>
                 </el-col>
                 <el-col :span="24">
                   <div id="contact1">
-                      背景
+                       <span class="subTitle">相关推荐</span>
+                       <div v-for="(value,i) of recommend" :key="i">
+                        <!-- <span>来源：{{recommend[i].source}}</span> -->
+                       <span>作者：{{recommend[i].author}}</span>
+                       <span class="title">标题：{{recommend[i].title}}</span>
+                       <span>时间：{{recommend[i].time}}</span>
+                    </div>
                   </div>
                 </el-col>
                 <el-col :span="24">
                   <div id="join1">
-                      说明
+                    <span class="subTitle">评论</span>
+                    <template > 
+                    <comment></comment>
+                    </template> 
                   </div>
                 </el-col>
                 <el-col :span="24">
@@ -131,9 +150,9 @@
                  </div>
                 </el-col>
                 <el-col :span="24">
-                  <template>
+                  <!-- <template>
                   <comment></comment>
-                  </template>
+                  </template> -->
                 </el-col>
             </el-col>
           </el-row>
@@ -341,7 +360,7 @@ export default {
 }
 #home1,#team1,#contact1,#join1{
   width: 80%;
-  height: 500px;
+  /* height: 500px; */
   color: #000;
   font-size: 15px;
   /* text-align: center; */

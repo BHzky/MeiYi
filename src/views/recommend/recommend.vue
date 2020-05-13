@@ -4,7 +4,7 @@
             <el-header>MeiYi科研</el-header>
             <el-main>
                 <el-row>
-                    <el-col :span="20" :offset="3">
+                    <el-col :span="20" :offset="3" class="hidden-sm-and-down">
                         <div style="margin-bottom:40px;margin-top:40px">
                             <el-breadcrumb separator-class="el-icon-arrow-right">
                                 <el-breadcrumb-item :to="{ path: '/index' }"><i class="el-icon-location-information"></i>首页</el-breadcrumb-item>
@@ -12,7 +12,18 @@
                             </el-breadcrumb>
                         </div>
                     </el-col>
-                    <el-col :span="5" :offset="9">
+                    <el-col :span="20" :offset="1" class="hidden-md-and-up">
+                        <div style="margin-bottom:40px;margin-top:40px">
+                            <el-breadcrumb separator-class="el-icon-arrow-right">
+                                <el-breadcrumb-item :to="{ path: '/index' }"><i class="el-icon-location-information"></i>首页</el-breadcrumb-item>
+                                <el-breadcrumb-item>推荐页</el-breadcrumb-item>
+                            </el-breadcrumb>
+                        </div>
+                    </el-col>
+                    <el-col :span="5" :offset="9" class="hidden-sm-and-down">
+                        <div class="title">{{getData}}</div>
+                    </el-col>
+                    <el-col :span="22" :offset="1" class="hidden-md-and-up">
                         <div class="title">{{getData}}</div>
                     </el-col>
                     <el-col :span="12" :offset="8">

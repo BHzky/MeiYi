@@ -86,7 +86,7 @@
                   </el-option>
               </el-select>
               </el-col>
-              <el-col :span="4">
+              <el-col :span="4" class="hidden-md-and-down">
                 <el-button type="primary" @click="exactValue">查找</el-button>
               </el-col>
               <el-col :span="24">
@@ -197,7 +197,7 @@
                   <el-card class="box-card" v-loading="loading" v-for="(item,i) of exactTerm" :key="i">
                       <div>
                           <div>
-                            <el-link type="primary" @click="skip">展示更多关于本篇文章的详细情况 <i class="el-icon-right"></i> </el-link>
+                            <el-link type="primary" :data="exactTerm[i].referId" @click="skip($event)">展示更多关于本篇文章的详细情况 <i class="el-icon-right"></i> </el-link>
                             
                           </div>
                           <div class="pdf">
@@ -261,7 +261,7 @@
                  <el-card class="box-card" v-loading="loading" v-for="(item,i) of showdata" :key="i">
                     <div>
                         <div>
-                           <el-link type="primary" @click="skip">Related Tasks can Share! A Multi-task Framework for Affective language</el-link>
+                           <el-link type="primary" :data="showdata[i].referId" @click="skip($event)">展示更多关于本篇文章的详细情况</el-link>
                            <div class="mdPdf">
                             <span @click="pdf">pdf</span>
                             <i class="el-icon-share" ></i>  
@@ -273,10 +273,10 @@
                                 选择所需<i class="el-icon-arrow-down el-icon--right"></i>
                               </span>
                               <el-dropdown-menu slot="dropdown">
-                                <el-dropdown-item :command="{skip:'a',i}">介绍</el-dropdown-item>
-                                <el-dropdown-item :command="{skip:'b',i}">内容</el-dropdown-item>
-                                <el-dropdown-item :command="{skip:'c',i}">结论</el-dropdown-item>
-                                <el-dropdown-item :command="{skip:'d',i}">展示</el-dropdown-item>
+                                <el-dropdown-item :command="{skip:'a',i}">文章标题</el-dropdown-item>
+                                <el-dropdown-item :command="{skip:'b',i}">文章概要</el-dropdown-item>
+                                <el-dropdown-item :command="{skip:'c',i}">文章来源</el-dropdown-item>
+                                <el-dropdown-item :command="{skip:'d',i}">文章科研成果</el-dropdown-item>
                               </el-dropdown-menu>
                             </el-dropdown>
                           </div>
@@ -422,7 +422,7 @@ export default {
         if(command.skip==="a"){
           // i = 0
           this.classifiedDisplay[i] = this.showdata.map((elem)=>{
-            return elem.author
+            return elem.title
           })[i]
           // console.log( this.classifiedDisplay[i],"0909090")
           this.cardbg="cardbg1"
@@ -430,7 +430,7 @@ export default {
         }else if(command.skip==="b"){
           // i = 1
           this.classifiedDisplay[i] = this.showdata.map((elem)=>{
-            return elem.title
+            return elem.abstract
           })[i]
           this.cardbg="cardbg4"
           // this.choose="内容"
@@ -444,7 +444,7 @@ export default {
         }else if(command.skip==="d"){
           // i = 3
           this.classifiedDisplay[i] = this.showdata.map((elem)=>{
-            return elem.time
+            return elem.introduce
           })[i]
           this.cardbg="cardbg2"
           // this.choose="展示"
@@ -552,14 +552,6 @@ export default {
           
           return collect
         },
-        // isBottom:{
-        //     get (){
-        //         return this.$store.state.scientific.isBottom
-        //     },
-        //     set(val){
-        //         this.$store.state.scientific.isBottom=val
-        //     }
-        // },
         showdata(){
           let data=this.allData.filter((elem,i,arr)=>{
              return elem.source === this.$route.query.source
@@ -743,13 +735,13 @@ export default {
   .box-card {
     width: 100%;
     margin-top: 20px;
-    height: 300px;
+    /* height: 300px; */
     position: relative;
   }
   .newbox-card {
     width: 100%;
     margin-top: 20px;
-    height: 200px;
+    /* height: 200px; */
     position: relative;
   }
   .enlargement{

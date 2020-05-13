@@ -42,16 +42,16 @@
           <el-row>
             <el-col :lg="{span:16,offset:4}" :md="{span:22,offset:1}" :sm="{span:8,offset:10}" class="hidden-sm-and-down">
               <div style="margin-top:100px;">
-                    <el-carousel :interval="4000"  height="400px" ref="carousel" @click.native="carousel">
+                    <el-carousel :interval="4000" height="400px" ref="carousel" @click.native="carousel">
                       <el-carousel-item v-for="item in 4" :key="item">
                         <img style="width:100%" :src="`/img/index${item}.jpg`" alt="">
                       </el-carousel-item>
                     </el-carousel>
               </div>
             </el-col>
-            <el-col :lg="{span:18,offset:3}" :md="{span:8,offset:10}" class="hidden-sm-and-up">
-              <div>
-                    <el-carousel :interval="4000" height="200px" arrow="always">
+            <el-col :lg="{span:18,offset:3}" :md="{span:8,offset:10}" class="hidden-md-and-up">
+              <div style="margin-top:80px;">
+                    <el-carousel :interval="4000" height="200px"  arrow="always" ref="carousel" @click.native="carousel">
                       <el-carousel-item v-for="item in 4" :key="item">
                         <img style="width:100%" :src="`/img/index${item}.jpg`" alt="">
                       </el-carousel-item>
@@ -86,9 +86,9 @@
                 </div>
               </div>
             </el-col>
-            <el-col :lg="{span:16,offset:3}" class="hidden-sm-and-up">
+            <el-col :lg="{span:16,offset:3}" class="hidden-md-and-up">
               <div class="demo-image likeImage">
-                <div class="block" v-for="fit in mdlikeNumber" :key="fit">
+                <div class="block" v-for="fit in mdlikeNumber" :key="fit" @click="block(fit)">
                   <img
                     style="width: 95%;height:95%"
                     :src="fit">
@@ -98,51 +98,54 @@
             <el-col :lg="{span:16,offset:4}" :md="{span:16,offset:4}">
               <div class="like">
                 <span> <div></div> <span>科研专类</span></span>
-                <el-link> <i class="el-icon-refresh"></i> 换一批</el-link>
+                <el-link @click="anotherBatch1"> <i class="el-icon-refresh"></i> 换一批</el-link>
               </div>
             </el-col>
             <el-col :lg="{span:16,offset:4}" :md="{span:16,offset:4}" class="hidden-sm-and-down">
               <div class="demo-image likeImage">
-                <div class="block" v-for="fit in 5" :key="fit">
+                <div class="block" v-for="(fit,i) of likeNumber1" :key="i" ref="block" @click="block(fit)">
                   <img
                     style="width: 95%;height:95%"
-                    :src="url">
+                    :src="fit"
+                    >
                 </div>
               </div>
             </el-col>
-            <el-col :lg="{span:16,offset:3}"  class="hidden-sm-and-up">
+            <el-col :lg="{span:16,offset:3}" class="hidden-md-and-up">
               <div class="demo-image likeImage">
-                <div class="block" v-for="fit in 4" :key="fit">
+                <div class="block" v-for="fit in mdlikeNumber1" :key="fit" @click="block(fit)">
                   <img
                     style="width: 95%;height:95%"
-                    :src="url">
+                    :src="fit">
                 </div>
               </div>
             </el-col>
-             <el-col :lg="{span:16,offset:4}" :md="{span:16,offset:4}">
+            <el-col :lg="{span:16,offset:4}" :md="{span:16,offset:4}">
               <div class="like">
                 <span> <div></div> <span>科研头条</span></span>
-                <el-link> <i class="el-icon-refresh"></i> 换一批</el-link>
+                <el-link @click="anotherBatch2"> <i class="el-icon-refresh"></i> 换一批</el-link>
               </div>
             </el-col>
             <el-col :lg="{span:16,offset:4}" :md="{span:16,offset:4}" class="hidden-sm-and-down">
               <div class="demo-image likeImage">
-                <div class="block" v-for="fit in 5" :key="fit">
+                <div class="block" v-for="(fit,i) of likeNumber2" :key="i" ref="block" @click="block(fit)">
                   <img
                     style="width: 95%;height:95%"
-                    :src="url">
+                    :src="fit"
+                    >
                 </div>
               </div>
             </el-col>
-            <el-col :lg="{span:16,offset:3}" class="hidden-sm-and-up">
+            <el-col :lg="{span:16,offset:3}" class="hidden-md-and-up">
               <div class="demo-image likeImage">
-                <div class="block" v-for="fit in 4" :key="fit">
+                <div class="block" v-for="fit in mdlikeNumber2" :key="fit" @click="block(fit)">
                   <img
                     style="width: 95%;height:95%"
-                    :src="url">
+                    :src="fit">
                 </div>
               </div>
             </el-col>
+
             <el-col :span="24" :offset="0">
                <div class="cont">
                 <div class="contlist" ref='contlist' @mouseover="stopScroll" @mouseout="startScroll">
@@ -231,7 +234,35 @@ export default {
             '/img/like/like5.jpg',
             '/img/like/like6.jpg'
             ],
+          likeNumber1:[
+            '/img/like/like1.jpg',
+            '/img/like/like2.jpg',
+            '/img/like/like3.jpg',
+            '/img/like/like4.jpg',
+            '/img/like/like5.jpg',
+            '/img/like/like6.jpg'
+            ],
+          likeNumber2:[
+            '/img/like/like1.jpg',
+            '/img/like/like2.jpg',
+            '/img/like/like3.jpg',
+            '/img/like/like4.jpg',
+            '/img/like/like5.jpg',
+            '/img/like/like6.jpg'
+            ],
           mdlikeNumber:[
+            '/img/like/like1.jpg',
+            '/img/like/like2.jpg',
+            '/img/like/like3.jpg',
+            '/img/like/like4.jpg',
+          ],
+          mdlikeNumber1:[
+            '/img/like/like1.jpg',
+            '/img/like/like2.jpg',
+            '/img/like/like3.jpg',
+            '/img/like/like4.jpg',
+          ],
+          mdlikeNumber2:[
             '/img/like/like1.jpg',
             '/img/like/like2.jpg',
             '/img/like/like3.jpg',
@@ -295,6 +326,82 @@ export default {
             ]
         }else if(this.mdlikeNumber[0]==='/img/like/like7.jpg'){
           this.mdlikeNumber=[
+            '/img/like/like1.jpg',
+            '/img/like/like2.jpg',
+            '/img/like/like3.jpg',
+            '/img/like/like4.jpg',
+            ]
+        }
+        
+      },
+      anotherBatch1(){
+        console.log("99999")
+        if(this.likeNumber1[0]==='/img/like/like1.jpg'){
+            this.likeNumber1=[
+            '/img/like/like7.jpg',
+            '/img/like/like8.jpg',
+            '/img/like/like9.jpg',
+            '/img/like/like10.jpg',
+            '/img/like/like11.jpg',
+            '/img/like/like12.jpg'
+            ]
+        }else if(this.likeNumber1[0]==='/img/like/like7.jpg'){
+          this.likeNumber1=[
+            '/img/like/like1.jpg',
+            '/img/like/like2.jpg',
+            '/img/like/like3.jpg',
+            '/img/like/like4.jpg',
+            '/img/like/like5.jpg',
+            '/img/like/like6.jpg'
+            ]
+        }
+        if(this.mdlikeNumber1[0]==='/img/like/like1.jpg'){
+            this.mdlikeNumber1=[
+            '/img/like/like5.jpg',
+            '/img/like/like6.jpg',
+            '/img/like/like7.jpg',
+            '/img/like/like8.jpg',
+            ]
+        }else if(this.mdlikeNumber1[0]==='/img/like/like7.jpg'){
+          this.mdlikeNumber1=[
+            '/img/like/like1.jpg',
+            '/img/like/like2.jpg',
+            '/img/like/like3.jpg',
+            '/img/like/like4.jpg',
+            ]
+        }
+        
+      },
+      anotherBatch2(){
+        console.log("99999")
+        if(this.likeNumber2[0]==='/img/like/like1.jpg'){
+            this.likeNumber2=[
+            '/img/like/like7.jpg',
+            '/img/like/like8.jpg',
+            '/img/like/like9.jpg',
+            '/img/like/like10.jpg',
+            '/img/like/like11.jpg',
+            '/img/like/like12.jpg'
+            ]
+        }else if(this.likeNumber2[0]==='/img/like/like7.jpg'){
+          this.likeNumber2=[
+            '/img/like/like1.jpg',
+            '/img/like/like2.jpg',
+            '/img/like/like3.jpg',
+            '/img/like/like4.jpg',
+            '/img/like/like5.jpg',
+            '/img/like/like6.jpg'
+            ]
+        }
+        if(this.mdlikeNumber2[0]==='/img/like/like1.jpg'){
+            this.mdlikeNumber2=[
+            '/img/like/like5.jpg',
+            '/img/like/like6.jpg',
+            '/img/like/like7.jpg',
+            '/img/like/like8.jpg',
+            ]
+        }else if(this.mdlikeNumber2[0]==='/img/like/like7.jpg'){
+          this.mdlikeNumber2=[
             '/img/like/like1.jpg',
             '/img/like/like2.jpg',
             '/img/like/like3.jpg',
@@ -398,9 +505,6 @@ export default {
 
       },
       updated(){
-        //   this.onScroll()
-        // console.log(this.show,"22")
-        // console.log(this.islogin,"00")
         
       },
 }

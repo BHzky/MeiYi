@@ -12,10 +12,16 @@
             </div>
             <div class="card-carousel--nav__right" @click="moveCarousel(1)" :disabled="atEndOfList"></div>
         </div>
+        <div>
+          <slot say="nihao">
+          </slot>
+        </div>
     </div>
 </template>
 <script>
 export default {
+    name:"myCarousel",
+    props:['tttt'],
     data(){
         return {
             currentOffset: 0,
@@ -46,7 +52,11 @@ export default {
             } else if (direction === -1 && !this.atHeadOfList) {
                 this.currentOffset += this.paginationFactor;
             }
+            // this.$emit("on-click",{a:123})
             },
+    },
+    mounted(){
+      console.log(this.tttt,"00")
     },
     computed: {
         atEndOfList() {

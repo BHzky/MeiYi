@@ -6,12 +6,11 @@
     <title>Document</title>
 </head>
 <body>
-    <div style="width: 200px;">12345678ewremtpoinb9eusrenoidpam[cvfpoiesnuignri9</div>
-    <div>12345678ewremtpoinb9eusrenoidpam[cvfpoiesnuignri9</div>
-    <div>12345678ewremtpoinb9eusrenoidpam[cvfpoiesnuignri9</div>
-    <div>12345678ewremtpoinb9eusrenoidpam[cvfpoiesnuignri9</div>
     <script>
-        console.log(11)
+            let obj = { a: 1, b: 2, c: 3 };
+obj.__proto__ = { c: 4 };
+let { a, b, c } = obj;
+console.log(c);
     </script>
 </body>
 </html>

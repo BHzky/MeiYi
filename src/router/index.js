@@ -8,6 +8,7 @@ import detailsOne from "../views/details/detailsOne"
 import detailsTwo from "../views/details/detailsTwo"
 import comment from "../views/details/comment"
 import login from "../views/Login/login"
+import canvasTwo from "../views/Login/canvasTwo"
 import move from "../views/Login/move"
 import reg from "../views/Login/reg"
 import map from "../views/echarts/map"
@@ -53,6 +54,7 @@ const routes = [
   {path:"/detailsTwo",name:"detailsTwo",component:detailsTwo},
   {path:"/comment",name:"comment",component:comment},
   {path:"/login",name:"login",component:login},
+  {path:"/canvasTwo",name:"canvasTwo",component:canvasTwo},
   {path:"/move",name:"move",component:move},
   {path:"/reg",name:"reg",component:reg},
   {path:"/map",name:"map",component:map,meta:{requiresAuth: true}},

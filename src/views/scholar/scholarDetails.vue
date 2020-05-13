@@ -13,7 +13,7 @@
                             </el-breadcrumb>
                         </div>
                     </el-col>
-                    <el-col :span="4" :offset="3">
+                    <el-col :span="4" :offset="3" class="hidden-sm-and-down">
                         <div class="scholarLeft">
                             <img src="/img/scholar/like1.jpg" alt="">
                             <div class="scholarName">鲁迅</div>
@@ -29,7 +29,41 @@
                             </div>
                         </div>
                     </el-col>
-                    <el-col :span="12" :offset="1">
+                     <el-col :span="24" :offset="0"  class="hidden-md-and-up">
+                        <div class="scholarLeft">
+                            <img src="/img/scholar/like1.jpg" alt="">
+                            <div class="scholarName">鲁迅</div>
+                            <div class="attention">
+                                <div>关注</div>
+                                <div>分享</div>
+                            </div>
+                            <div class="attentionDetails">
+                                <div>科研贡献</div>
+                                <div>1111</div>
+                                <div>科研文献数量</div>
+                                <div>{{2}}篇</div>
+                            </div>
+                        </div>
+                    </el-col>
+                    <el-col :span="12" :offset="1" class="hidden-sm-and-down">
+                        <el-tabs type="border-card">
+                            <el-tab-pane label="个人主页">
+                                <div class="personPage">
+                                    <div>姓名：</div>
+                                    <div>获得荣誉：</div>
+                                    <div>个人简介：</div>
+                                    <div>发表的文章：</div>
+                                </div>
+                            </el-tab-pane>
+                            <el-tab-pane label="成果">
+                                <div style="height:405px">暂无数据1</div>
+                            </el-tab-pane>
+                            <el-tab-pane label="学者文章">
+                                <div style="height:405px">暂无数据2</div>
+                            </el-tab-pane>
+                        </el-tabs>
+                    </el-col>
+                    <el-col :span="24" :offset="0" class="hidden-md-and-up" style="margin-top:30px">
                         <el-tabs type="border-card">
                             <el-tab-pane label="个人主页">
                                 <div class="personPage">
