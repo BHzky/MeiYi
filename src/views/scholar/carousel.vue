@@ -5,7 +5,7 @@
             <div class="card-carousel">
                 <div class="card-carousel--overflow-container">
                     <div class="card-carousel-cards" :style="{ transform: 'translateX' + '(' + currentOffset + 'px' + ')'}">
-                        <div class="card-carousel--card" v-for="item in items" :key="item.name"><img :src="item.name">
+                        <div class="card-carousel--card" v-for="item in items" :key="item.name" @click="move(item.tag)"><img :src="item.name">
                         </div>
                     </div>
                 </div>
@@ -52,8 +52,14 @@ export default {
             } else if (direction === -1 && !this.atHeadOfList) {
                 this.currentOffset += this.paginationFactor;
             }
-            // this.$emit("on-click",{a:123})
+            this.$emit("on-click",{a:123})
             },
+            move(value){
+              this.$router.push({
+                path:"scholarDetails",
+                query:{value:value}
+              })
+            }
     },
     mounted(){
       console.log(this.tttt,"00")

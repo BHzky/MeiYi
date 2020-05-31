@@ -12,31 +12,29 @@
                             </el-breadcrumb>
                         </div>
                     </el-col>
+                    <el-col :span="9" :offset="0">
+                        <div class="userName">用户名称：{{username}}</div>
+                    </el-col>
                     <el-col :span="15" :offset="3">
                          <el-tabs :tab-position="tabPosition" style="height: 300px;">
                             <el-tab-pane label="喜欢">
                                 <div class="subscribe">
-                                    <div>喜欢过{{peopleScholar}}位学者</div>
-                                    <div class="peopleDetails">
-                                        <div><img src="/img/scholar/like1.jpg" alt=""></div>
-                                        <div>luxun</div>
+                                    <div>喜欢过{{attentionNum}}位学者</div>
+                                    <div class="peopleDetails" v-for="num in attentionNum" :key="num">
+                                        <div><img :src='`/img/scholar/like${num}.jpg`' alt=""></div>
+                                        <div>{{attention}}</div>
                                     </div>
                                     
                                 </div>
                             </el-tab-pane>
                             <el-tab-pane label="收藏">
-                                <div>喜欢过{{peopleScholar}}位学者</div>
-                                    <div class="peopleDetails">
-                                        <div><img src="/img/scholar/like1.jpg" alt=""></div>
-                                        <div>luxun</div>
+                                <div>收藏过{{collectNum}}篇文章</div>
+                                    <div class="collectDetails"  v-for="num in collectNum" :key="num">
+                                        <div>文章标题：</div>
+                                        <div>{{collect}}</div>
                                     </div>
                             </el-tab-pane>
                         </el-tabs>
-                        <!-- <div class="person">
-                            <div> <i class="el-icon-star-off"></i> 订阅</div>
-                            <div> <i class="el-icon-pie-chart"></i> 收藏</div>
-                            <div> <i class="el-icon-timer"></i> 喜欢</div>
-                        </div> -->
                     </el-col>
                     <el-col :span="6">
                     </el-col>
@@ -47,12 +45,14 @@
 </template>
 <script>
 import {mapState,mapActions} from "vuex"
+import {getPersonal} from '../../assets/js/apis/personal.js'
 export default {
     data (){
         return {
             tabPosition: 'top',
             peopleScholar:1,
-            people:[1,2,3,4,5]
+            people:[1,2,3,4,5],
+            user:[{}],
             
         }
     },
@@ -62,30 +62,30 @@ export default {
       ]),
     },
     created(){
-        
+        getPersonal().then((res)=>{
+            this.user = res
+            console.log(this.user)
+        })
     },
     mounted(){
-        this.disGetScholar()
-        // console.log(this.scholarData,"9090")
-        setInterval(() => {
-            var rand = Math.floor( Math.random() * this.people.length );
-            // 随机从数组中取出某值（不会改变原数组）
-            var data = this.people.slice(rand)[0];
-            this.peopleScholar=data
-        }, 1000);
-        console.log("执行")
+        
     },
     computed:{
-        ...mapState('scholar',[
-          "scholarData",
-        ]),
-        // peopleScholar(){
-        //     setTimeout(() => {
-                
-        //         console.log(3243)
-        //         return 2
-        //     }, 1000); 
-        // }
+        collectNum(){
+            return this.user[0].collectNum
+        },
+        attentionNum(){
+            return this.user[0].attentionNum
+        },
+        username(){
+            return this.user[0].username
+        },
+        collect(){
+            return this.user[0].collect
+        },
+        attention(){
+            return this.user[0].attention
+        }
     },
     updated(){
     }
@@ -103,6 +103,7 @@ export default {
     color: #333;
     text-align: center;
     /* line-height: 160px; */
+    min-height: calc(100vh - 60px)
   }
   .person{
       display: flex;
@@ -129,6 +130,18 @@ export default {
       height: 100px;
       line-height: 100px;
       border-radius: 50%;
+  }
+  .collectDetails{
+      display: flex;
+      margin-top: 40px;
+  }
+  .collectDetails>:nth-child(1){
+      margin-right: 40px;
+  }
+  .userName{
+      margin-bottom: 30px;
+      color: rgb(75, 177, 236);
+      font-size: 25px;
   }
 
 </style>

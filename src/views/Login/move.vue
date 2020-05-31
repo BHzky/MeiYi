@@ -218,6 +218,20 @@
         </div>
     </div>
 </template>
+<script>
+export default {
+  data(){
+    return{
+
+    }
+  },
+  mounted(){
+    setTimeout(() => {
+      this.$router.push('book')
+    }, 6000);
+  }
+}
+</script>
 <style scoped>
 body {
   background: #000;
@@ -240,8 +254,8 @@ body {
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
   pointer-events: none;
-  -webkit-animation: attention 8000ms linear forwards, fade 8000ms linear forwards;
-          animation: attention 8000ms linear forwards, fade 8000ms linear forwards;
+  -webkit-animation: attention 10000ms linear forwards, fade 10000ms linear forwards;
+          animation: attention 10000ms linear forwards, fade 10000ms linear forwards;
 }
 
 .container {

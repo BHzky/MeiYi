@@ -53,6 +53,7 @@
     </div>
 </template>
 <script>
+import bus from '../bus.js'
 import defaultImg from "../../public/img/bg.png"
 import {getIndex} from "../assets/js/apis/index.js"//这边只能直接解构
 export default {
@@ -63,7 +64,10 @@ export default {
     },
     methods:{
         skip(){
-            this.$router.replace('/')
+            // this.$router.replace('/')
+            bus.$emit("test",this.input)
+            console.log(1)
+
         }
     },
     created(){

@@ -3,13 +3,14 @@
       <el-container>
         <el-header fixed height="60px" class="top">
           <el-row>
-            <el-col :lg="{span:3,offset:2}" :md="{span:5}" :sm="{span:5}" :xs="{span:11}"><div>MeiYI图书馆</div></el-col>
+            <el-col :lg="{span:3,offset:2}" :md="{span:5}" :sm="{span:5}" :xs="{span:11}"><div>MeiYI学术文献服务系统</div></el-col>
             <el-col :lg="{span:6,offset:2}" :md="{span:7}" class="hidden-sm-and-down">
               <template>
                 <el-tabs v-model="activeName" @tab-click="handleClick">
-                  <el-tab-pane label="科研" name="second"></el-tab-pane>
-                  <el-tab-pane label="地图" name="three"></el-tab-pane>
+                  <el-tab-pane label="开放文献" name="second"></el-tab-pane>
+                  
                   <el-tab-pane label="学者" name="four"></el-tab-pane>
+                  <el-tab-pane label="地图" name="three"></el-tab-pane>
                   <el-tab-pane label="我的" name="first"></el-tab-pane>
                 </el-tabs>
               </template>
@@ -120,25 +121,38 @@
                 </div>
               </div>
             </el-col>
+            <!-- 图书的推荐 -->
             <el-col :lg="{span:16,offset:4}" :md="{span:16,offset:4}">
               <div class="like">
-                <span> <div></div> <span>科研头条</span></span>
-                <el-link @click="anotherBatch2"> <i class="el-icon-refresh"></i> 换一批</el-link>
+                <span> <div></div> <span>图书推荐</span></span>
+                <el-link @click="anotherBatch3"> <i class="el-icon-right"></i> 查看更多</el-link>
               </div>
             </el-col>
             <el-col :lg="{span:16,offset:4}" :md="{span:16,offset:4}" class="hidden-sm-and-down">
               <div class="demo-image likeImage">
-                <div class="block" v-for="(fit,i) of likeNumber2" :key="i" ref="block" @click="block(fit)">
+                <div class="block" v-for="(fit,i) of book" :key="i" ref="block" @click="block(fit.book)" style="margin-bottom:50px"> 
                   <img
-                    style="width: 95%;height:95%"
-                    :src="fit"
+                    style="width: 100%;height:80%"
+                    :src="fit.book"
                     >
+                    <div class="bookDec">{{fit.dec}}</div>
+                </div>
+              </div>
+            </el-col>
+            <el-col :lg="{span:16,offset:4}" :md="{span:16,offset:4}" class="hidden-sm-and-down">
+              <div class="demo-image likeImage">
+                <div class="block" v-for="(fit,i) of bookOne" :key="i" ref="block" @click="block(fit.book)" style="margin-bottom:60px">
+                  <img
+                    style="width: 100%;height:70%"
+                    :src="fit.book"
+                    >
+                    <div class="bookDec">{{fit.dec}}</div>
                 </div>
               </div>
             </el-col>
             <el-col :lg="{span:16,offset:3}" class="hidden-md-and-up">
               <div class="demo-image likeImage">
-                <div class="block" v-for="fit in mdlikeNumber2" :key="fit" @click="block(fit)">
+                <div class="block" v-for="fit in mdbook" :key="fit" @click="block(fit)">
                   <img
                     style="width: 95%;height:95%"
                     :src="fit">
@@ -234,15 +248,29 @@ export default {
             '/img/like/like5.jpg',
             '/img/like/like6.jpg'
             ],
-          likeNumber1:[
-            '/img/like/like1.jpg',
-            '/img/like/like2.jpg',
-            '/img/like/like3.jpg',
-            '/img/like/like4.jpg',
-            '/img/like/like5.jpg',
-            '/img/like/like6.jpg'
+          book:[
+            {book:'/img/book/book1.jpg',dec:"大数据时代的科研活动"},
+            {book:'/img/book/book2.jpg',dec:"学科竞争力研究"},
+            {book:'/img/book/book3.jpg',dec:"党的历史知识简明读本"},
+            {book:'/img/book/book4.jpg',dec:"教育科研与教师专业发展"},
+            {book:'/img/book/book5.jpg',dec:"媒介素养的跨学科研究与实践"},
+            {book:'/img/book/book6.jpg',dec:"科研成果研讨会发言汇编"},
             ],
-          likeNumber2:[
+          bookOne:[
+            {book:'/img/book/book7.jpg',dec:'科研团队绩效及作用机制研究'},
+            {book:'/img/book/book8.jpg',dec:'推动数字科技助力金融业创新'},
+            {book:'/img/book/book10.jpg',dec:'贴近行业一线的实践经验'},
+            {book:'/img/book/book11.jpg',dec:'金融领域极具前瞻性的理论'},
+            {book:'/img/book/book12.jpg',dec:'大数据时代科研人员个人学术信息管理行为'},
+            {book:'/img/book/book13.jpg',dec:'科研方法指导及实践'},
+            ],
+            mdbook:[
+            '/img/book/book1.jpg',
+            '/img/book/book2.jpg',
+            '/img/book/book3.jpg',
+            '/img/book/book4.jpg',
+            ],
+          likeNumber1:[
             '/img/like/like1.jpg',
             '/img/like/like2.jpg',
             '/img/like/like3.jpg',
@@ -257,12 +285,6 @@ export default {
             '/img/like/like4.jpg',
           ],
           mdlikeNumber1:[
-            '/img/like/like1.jpg',
-            '/img/like/like2.jpg',
-            '/img/like/like3.jpg',
-            '/img/like/like4.jpg',
-          ],
-          mdlikeNumber2:[
             '/img/like/like1.jpg',
             '/img/like/like2.jpg',
             '/img/like/like3.jpg',
@@ -372,43 +394,8 @@ export default {
         }
         
       },
-      anotherBatch2(){
-        console.log("99999")
-        if(this.likeNumber2[0]==='/img/like/like1.jpg'){
-            this.likeNumber2=[
-            '/img/like/like7.jpg',
-            '/img/like/like8.jpg',
-            '/img/like/like9.jpg',
-            '/img/like/like10.jpg',
-            '/img/like/like11.jpg',
-            '/img/like/like12.jpg'
-            ]
-        }else if(this.likeNumber2[0]==='/img/like/like7.jpg'){
-          this.likeNumber2=[
-            '/img/like/like1.jpg',
-            '/img/like/like2.jpg',
-            '/img/like/like3.jpg',
-            '/img/like/like4.jpg',
-            '/img/like/like5.jpg',
-            '/img/like/like6.jpg'
-            ]
-        }
-        if(this.mdlikeNumber2[0]==='/img/like/like1.jpg'){
-            this.mdlikeNumber2=[
-            '/img/like/like5.jpg',
-            '/img/like/like6.jpg',
-            '/img/like/like7.jpg',
-            '/img/like/like8.jpg',
-            ]
-        }else if(this.mdlikeNumber2[0]==='/img/like/like7.jpg'){
-          this.mdlikeNumber2=[
-            '/img/like/like1.jpg',
-            '/img/like/like2.jpg',
-            '/img/like/like3.jpg',
-            '/img/like/like4.jpg',
-            ]
-        }
-        
+      anotherBatch3(){
+        this.$router.push('move')
       },
       //未登录时候的提示
       unlisted(){
@@ -437,7 +424,7 @@ export default {
         },
         handleClick(tab, event) {
         console.log(tab, event,"22");
-        if(tab.label==="科研"){
+        if(tab.label==="开放文献"){
             this.$router.push({path: '/scientific'})
         }else if(tab.label==="学者"){
             this.$router.push({path: '/scholar'})
@@ -451,26 +438,27 @@ export default {
       //鼠标悬停，停止滚动
 			stopScroll () {
         var target = this.$refs.contlist;
-        console.log(target)
 				clearInterval(this.scrollTime)
 			},
 			//鼠标移开 ，接着滚动
 			startScroll () {
-				var target = this.$refs.contlist;
+        var target = this.$refs.contlist;
 				this.scrollW = target.offsetLeft; // 移开时记录向左移动的距离
 				this.scroll()
 			},
 			//循环滚动
 			scroll (){
 				var that = this; //因为定时器里要使用vue对象时不能用this, 在定时器中的 this 代表
-				var target = this.$refs.contlist; 
+        var target = this.$refs.contlist; 
 				var initLeft = 0;
 				if(this.scrollW < 0){
-					initLeft = this.scrollW * (-1)
+          initLeft = this.scrollW * (-1)
+          console.log(initLeft,"00")
 				}
 				//定时器
 				this.scrollTime = setInterval(function(){
-				    initLeft ++;
+            initLeft ++;
+            // console.log(target.offsetWidth / 2,initLeft)
 				    if(initLeft >= target.offsetWidth / 2 ){
 				        initLeft = 0;
 				    }
@@ -483,7 +471,8 @@ export default {
     mounted(){
       //实例挂载完毕前
 			//调用滚动代码
-			this.scroll()
+      this.scroll()
+      
 
     },
     computed:{
@@ -628,5 +617,6 @@ export default {
 <style>
 .top .el-tabs__item{color: #fff;}
 .top .el-link.el-link--default{color:#fff !important;}
+.bookDec{margin-top: 20px;margin-left: 20px;}
 
 </style>

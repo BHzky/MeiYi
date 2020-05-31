@@ -12,6 +12,7 @@ export default{
               state.scholarData=data.map((elem)=>{
                   return elem.author
               });
+              state.scholarAlldetails=data
           },
           getDataAll(state,data){
             state.scholarAll=data

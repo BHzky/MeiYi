@@ -74,7 +74,7 @@ export default {
                     right: '8%'
                 },
                 xAxis: {
-                    data: ['驯鹿', '火箭', '飞机', '高铁', '轮船', '汽车', '跑步', '步行', ],
+                    data: ['review', 'citation',  'breadth', 'machines', 'relation', 'recurrent'],
                 axisTick: {
                         show: false
                     },
@@ -159,7 +159,7 @@ export default {
                             opacity: 1
                         }
                     },
-                    data: [123, 60, 25, 18, 12, 9, 2, 1],
+                    data: [123, 60, 25, 18, 12, 9],
                     z: 10
                 }]
             };
@@ -245,7 +245,7 @@ export default {
                                 color: '#fff',
                             }
                         },
-                        data: ['first', 'two', 'three', 'four', 'five']
+                        data: ['access', 'IEEE', 'ONE', 'CIKM', 'GUGE']
                     }
 
                 ],
@@ -626,7 +626,7 @@ export default {
                 animationDurationUpdate: 1000,
                 animationEasingUpdate: 'cubicInOut',
                 title: [{
-                    text: '科研兴趣相同爱好者人数',
+                    text: '全国科研兴趣爱好人数分布情况',
                     // link: 'http://pages.anjuke.com/expert/newexpert.html',
                     // subtext: 'data from Anjuke',
                     // sublink: 'http://pages.anjuke.com/expert/newexpert.html',

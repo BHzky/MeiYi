@@ -12,13 +12,16 @@ import canvasTwo from "../views/Login/canvasTwo"
 import move from "../views/Login/move"
 import reg from "../views/Login/reg"
 import map from "../views/echarts/map"
+import newmap from "../views/echarts/newMap"
 import echarts from "../views/echarts/echarts"
 import scholar from '../views/scholar/scholar'
 import scholarDetails from '../views/scholar/scholarDetails'
 import carousel from '../views/scholar/carousel'
 import recommend from '../views/recommend/recommend'
 import likeDetails from '../views/recommend/likeDetails'
+import likeMoreDetails from '../views/recommend/likeMoreDetails'
 import personal from '../views/personal/personal'
+import book from '../views/book'
 
 Vue.use(VueRouter)
 
@@ -58,13 +61,16 @@ const routes = [
   {path:"/move",name:"move",component:move},
   {path:"/reg",name:"reg",component:reg},
   {path:"/map",name:"map",component:map,meta:{requiresAuth: true}},
+  {path:"/newmap",name:"newmap",component:newmap,meta:{requiresAuth: true}},
   {path:"/echarts",name:"echarts",component:echarts},
   {path:"/scholar",name:"scholar",component:scholar},
   {path:"/scholarDetails",name:"scholarDetails",component:scholarDetails},
   {path:"/carousel",name:"carousel",component:carousel},
   {path:"/recommend",name:"recommend",component:recommend},
   {path:"/likeDetails",name:"likeDetails",component:likeDetails},
+  {path:"/likeMoreDetails",name:"likeMoreDetails",component:likeMoreDetails},
   {path:"/personal",name:"personal",component:personal},
+  {path:"/book",name:"book",component:book},
   // {
   //   path: '/about',
   //   name: 'about',

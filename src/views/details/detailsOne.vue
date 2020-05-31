@@ -282,8 +282,8 @@ export default {
         ]),
           showdata(){
             let data=this.concrete.filter((elem,i,arr)=>{
-             return elem.referId == this.$route.query.referId
-          })
+              return elem.referId == this.$route.query.referId
+            })
             return data
           },
           //概要

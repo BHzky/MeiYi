@@ -331,7 +331,7 @@
 </template>
 <script>
 import {mapState,mapActions} from "vuex"
-import {collect,disexactValue} from "../../assets/js/apis/scientific"
+import {collect,disexactValue,attentionAdd} from "../../assets/js/apis/scientific"
 export default {
  data() {
       const item = {
@@ -404,6 +404,9 @@ export default {
           this.isCollect[i] = "取消收藏"
           this.$forceUpdate()
           this.$set(this.collect,i,this.collect[i]+1)
+          attentionAdd().then((res)=>{
+            console.log(res)
+          })
         }else{
           this.isCollect[i] = "收藏"
           this.$forceUpdate()
@@ -481,11 +484,11 @@ export default {
           this.$forceUpdate();
           this.$set(this.newclassifiedDisplay,i,"来源："+data+"作者："+data1+"时间："+data2)
         }else if(value==="文章科研成果"){
-          let data = this.showdata.map((elem)=>{
+          let data3 = this.showdata.map((elem)=>{
             return elem.introduce
           })[i]
           this.$forceUpdate();
-          this.$set(this.newclassifiedDisplay,i,data)
+          this.$set(this.newclassifiedDisplay,i,data3)
         }
       },
       //精确查询过后的点击函数
@@ -530,7 +533,6 @@ export default {
            path:'/detailsOne',
            query:{referId:font}
            })
-        //  this.$router.push({path: '/detailsOne'});
       },  
       pdf(){
         const {href} = this.$router.resolve({path:"https://arxiv.org/pdf/2002.05909.pdf"});

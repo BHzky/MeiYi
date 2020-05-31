@@ -21,23 +21,7 @@
                             </div>
                         </template>
                         </el-autocomplete>
-                        <el-button type="primary" class="nearby" @click="dialogVisible = true">查看分布</el-button>
-                        <el-dialog class="choose"
-                        :visible.sync="dialogVisible"
-                        width="30%"
-                        >
-                        <div class="suspension">
-                            <div class="cricle" @click="nation">
-                                <div>全国</div>
-                            </div>
-                            <div class="cricle">
-                                <div>下转</div>
-                            </div>
-                            <div class="cricle">
-                                <div>下转</div>
-                            </div>
-                        </div>
-                        </el-dialog>
+                        <el-button type="primary" class="nearby" @click="nation">查看当前位置分布</el-button>
                     <div>
                         <div id="map-container" class="ditu"></div>
                     </div>
@@ -57,7 +41,6 @@
 export default {
      data() {
       return {
-            dialogVisible: false,
             form: {
                 address: '', //详细地址
                 addrPoint: { //详细地址经纬度
@@ -66,12 +49,30 @@ export default {
                 }
             },
             map: '', //地图实例
-            mk: '' //Marker实例
+            mk: '' ,//Marker实例
+            mks:'',
+            mapPoints:"",
             }  
     },
     methods:{
         nation(){
-            this.$router.push("echarts")
+            this.$router.push("newmap")
+        },
+        markerFun(points){
+            this.mapPoints = [
+                {x:30.312903,y:120.382029},
+                {x:30.215855,y:120.382029},
+                {x:30.312909,y:120.382029},
+                {x:30.312906,y:120.382022},
+                {x:30.312901,y:120.382025}
+            ];
+            let i = 0;
+            this.mk = new BMap.Marker(points)
+            this.map.addOverlay(this.mk)
+             for (;i<this.mapPoints.length;i++) {
+                var points = new BMap.Point(this.mapPoints[i].y,this.mapPoints[i].x);//创建坐标点
+                this.markerFun(points);
+            }
         },
         initMap() {
             var that = this;
@@ -79,6 +80,9 @@ export default {
             var point = new BMap.Point(116.404, 39.915);
             this.map.centerAndZoom(point,11)
             this.mk = new BMap.Marker(point,{enableDragging:true}) //创建一个图像标注实例，enableDragging：是否启用拖拽，默认为false
+            
+            
+
             this.map.addOverlay(this.mk) //将覆盖物添加到地图中
             this.mk.addEventListener('dragend', function(e){
                 that.getAddrByPoint(e.point) //拖拽结束后调用逆地址解析函数，e.point为拖拽后的地理坐标

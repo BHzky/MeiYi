@@ -15,3 +15,10 @@ export const getReferenceinfo = (parmas) => {
       data: parmas
     })
   }
+  export const collectAdd = (parmas) => {
+    return request({
+      url: '/pro/v1/collectAdd',
+      method: 'get',
+      data: parmas
+    })
+  }

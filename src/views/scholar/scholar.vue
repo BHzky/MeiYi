@@ -59,7 +59,7 @@
                         </div>
                     </el-col>
                     <el-col :span="24" class="hidden-sm-and-down">
-                        <myCarousel>
+                        <myCarousel @on-click="get">
                             <!-- <template slot-scope="a">
                                 {{a}}
                             </template> -->
@@ -73,7 +73,7 @@
                         <div class="famous"><i class="el-icon-s-custom" style="margin-right:10px"></i>知名学者</div>
                         <div class="honour">
                             <div class="honourLeft">
-                                <div v-for="item in items" :key="item.name" @click="famous">
+                                <div v-for="item in items" :key="item.name" @click="famous(item.tag)">
                                     <img :src="item.name" alt="">
                                     <div class="name-of-scholar">
                                         <div>学者</div>
@@ -82,7 +82,7 @@
                                 </div>
                             </div>
                             <div class="honourRight">
-                                <div v-for="item in itemsTwo" :key="item.name">
+                                <div v-for="item in itemsTwo" :key="item.name" @click="famous(item.tag)">
                                     <img :src="item.name" alt="">
                                     <div class="name-of-scholar">
                                         <div>学者</div>
@@ -96,7 +96,7 @@
                         <div class="famous"><i class="el-icon-s-custom" style="margin-right:10px"></i>知名学者</div>
                         <div class="honour">
                             <div class="honourLeft">
-                                <div class="Smfam" v-for="item in items" :key="item.name" @click="famous">
+                                <div class="Smfam" v-for="item in items" :key="item.name" @click="famous(item.tag)">
                                     <img :src="item.name" alt="">
                                     <div class="name-of-scholar">
                                         <div>学者</div>
@@ -105,7 +105,7 @@
                                 </div>
                             </div>
                             <div class="honourRight">
-                                <div v-for="item in itemsTwo" :key="item.name">
+                                <div v-for="item in itemsTwo" :key="item.name" @click="famous(item.tag)">
                                     <img :src="item.name" alt="">
                                     <div class="name-of-scholar">
                                         <div>学者</div>
@@ -153,16 +153,16 @@ export default {
     data (){
         return {
             items: [
-                {name: '/img/scholar/like10.jpg', tag: "1"},
-                {name: '/img/scholar/like11.jpg', tag: "2"},
-                {name: '/img/scholar/like12.jpg', tag: "3"},
-                {name: '/img/scholar/like13.jpg', tag: "4"},
+                {name: '/img/scholar/like1.jpg', tag: "1"},
+                {name: '/img/scholar/like2.jpg', tag: "2"},
+                {name: '/img/scholar/like3.jpg', tag: "3"},
+                {name: '/img/scholar/like4.jpg', tag: "4"},
             ],
             itemsTwo: [
-                {name: '/img/scholar/like1.jpg', tag: "5"},
-                {name: '/img/scholar/like2.jpg', tag: "6"},
-                {name: '/img/scholar/like3.jpg', tag: "7"},
-                {name: '/img/scholar/like4.jpg', tag: "8"},
+                {name: '/img/scholar/like5.jpg', tag: "5"},
+                {name: '/img/scholar/like6.jpg', tag: "6"},
+                {name: '/img/scholar/like7.jpg', tag: "7"},
+                {name: '/img/scholar/like8.jpg', tag: "8"},
             ],
 
             
@@ -190,12 +190,17 @@ export default {
                 type: 'warning'
             });
         },
-        famous(){
-            this.$router.push("scholarDetails")
+        famous(value){
+            this.$router.push({
+                path:"scholarDetails",
+                query:{value:value}
+                })
+        },
+        get(msg){
+            console.log(msg)
         }
     },
     created(){
-        
     },
     mounted(){
         this.disGetScholar();

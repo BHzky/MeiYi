@@ -39,3 +39,10 @@ export const disAdvise = (parmas) => {
     data: parmas
   })
 }
+export const attentionAdd = (parmas) => {
+  return request({
+    url: '/pro/v1/attentionAdd',
+    method: 'get',
+    data: parmas
+  })
+}

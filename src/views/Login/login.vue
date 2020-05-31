@@ -286,7 +286,6 @@ export default {
     flex-flow: column;
     /* 屏幕高度自适应100% */
     min-height: calc(100vh - 120px)
-    
   }
   
   body > .el-container {
