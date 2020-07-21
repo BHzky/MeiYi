@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-# breeze
-我的githup代码
-=======
 # project
 
 ## Project setup
@@ -23,7 +19,3 @@ npm run build
 ```
 npm run test:unit
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
->>>>>>> first
