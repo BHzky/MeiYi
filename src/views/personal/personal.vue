@@ -33,6 +33,7 @@
                             </el-tab-pane>
                         </el-tabs>
                         <!-- <div class="person">
+                            11111
                             <div> <i class="el-icon-star-off"></i> 订阅</div>
                             <div> <i class="el-icon-pie-chart"></i> 收藏</div>
                             <div> <i class="el-icon-timer"></i> 喜欢</div>
